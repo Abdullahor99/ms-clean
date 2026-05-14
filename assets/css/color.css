@@ -1,0 +1,158 @@
+
+/*********************************** color ******************************************/
+
+.main-menu .navigation > li > ul > li > a:before,
+.main-menu .navigation > li > .megamenu li > a:before,
+.main-menu .navigation > li > ul > li > a:hover,
+.main-menu .navigation > li > .megamenu li > a:hover,
+.main-menu .navigation > li > ul > li > ul > li > a:hover,
+.scroll-to-top .scroll-bar-text,
+.sec-title .sub-title,
+.news-block-one .inner-box .lower-content .post-info li a,
+.news-block-one .inner-box .lower-content h3 a:hover,
+.main-footer .logo-widget .info-list li a:hover,
+.main-footer .links-list li a:hover,
+.main-footer .copyright p a:hover,
+.banner-style-two .link a:hover,
+.offer-block-one .inner-box h3 a:hover,
+.service-block-one .inner-box h3 a:hover,
+.project-block-two .inner-box .text-box h3 a:hover,
+.news-section .sec-title a:hover,
+.project-block-two .inner-box .text-box .link a:hover,
+.project-style-three .project-block-two .inner-box .text-box h3 a:hover,
+.testimonial-block-one .inner-box .author-box .designation,
+.content_block_four .content-box .support-box h3 a:hover,
+.service-style-two .sec-title a,
+.service-block-two .inner-box h3 a:hover,
+.service-block-two .inner-box .link a:hover,
+.team-block-one .inner-box .lower-content h3 a:hover,
+.about-style-five .content-box .author-info .designation,
+.page-title .content-box .bread-crumb li a:hover,
+.about-style-six .content_block_three .content-box .sec-title h4 a:hover,
+.header-style-five .main-menu .navigation > li.current > a, 
+.header-style-five .main-menu .navigation > li:hover > a,
+.service-block-three .inner-box h3 a:hover,
+.service-block-three .inner-box .link a:hover,
+.news-block-two .inner-box .lower-content .post-info li a:hover,
+.news-block-two .inner-box .lower-content h3 a:hover,
+.blog-sidebar .category-widget .category-list li a:hover,
+.blog-sidebar .category-widget .category-list li a:hover:before,
+.blog-sidebar .post-widget .post h5 a:hover,
+.blog-details-content .comment-inner .comment .info li a:hover,
+.contact-style-three .info-content .info-list li p a:hover
+
+{
+  color: var(--theme-color);
+}
+
+
+/** background **/
+
+.main-menu .navigation > li > ul > li > a:before, 
+.main-menu .navigation > li > .megamenu li > a:before,
+.sec-title .sub-title:before,
+.sec-title .sub-title:after,
+.project-block-one .inner-box .image-box .overlay-image:before,
+.testimonial-section .testimonial-block .image-box .icon-box,
+.working-block-one .inner-box .icon-box span,
+.news-block-one .inner-box .lower-content .post-info li:before,
+.news-block-one .inner-box .lower-content .post-info li a:before,
+.video-section.alternat-2 .bg-layer:before,
+.fluid-section .left-column,
+.fluid-section .left-column .content-box:before,
+.pagination li a:hover,
+.pagination li a.current,
+.blog-sidebar .post-widget .post .post-thumb,
+.blog-sidebar .tags-widget .tags-list li a:hover
+
+{
+  background: var(--theme-color);
+}
+
+
+
+
+/** border-color **/
+
+.main-menu .navigation > li > ul,
+.main-menu .navigation > li > .megamenu,
+.working-block-one .inner-box .icon-box,
+.contact-section .form-inner .form-group input:focus,
+.contact-section .form-inner .form-group textarea:focus,
+.contact-style-two .content-box .form-inner .form-group input:focus,
+.contact-style-two .content-box .form-inner .form-group textarea:focus,
+.service-block-three .inner-box:hover,
+.pagination li a:hover,
+.pagination li a.current,
+.blog-sidebar .search-widget .search-form .form-group input:focus,
+.blog-sidebar .tags-widget .tags-list li a:hover,
+.blog-details-content .comments-form-area .form-inner .form-group input:focus,
+.blog-details-content .comments-form-area .form-inner .form-group textarea:focus,
+.contact-style-three .form-inner .form-group input:focus,
+.contact-style-three .form-inner .form-group textarea:focus
+
+{
+  border-color: var(--theme-color) !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

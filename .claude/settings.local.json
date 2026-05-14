@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -v \"\\\\.\\\\.$\")",
+      "Bash(awk '{print NR\": \"$0}')",
+      "WebSearch"
+    ]
+  }
+}
