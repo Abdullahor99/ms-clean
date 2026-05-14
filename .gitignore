@@ -1,0 +1,28 @@
+# DDEV local development environment
+.ddev/
+
+# JetBrains IDE (PhpStorm, WebStorm, etc.)
+.idea/
+
+# macOS system files
+.DS_Store
+**/.DS_Store
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# PHP error logs
+error_log
+php_errors.log
+
+# DDEV database snapshots (can be large)
+.ddev/db_snapshots/
+
+# Node (if ever added)
+node_modules/
+npm-debug.log*
+
+# Temporary / editor swap files
+*.swp
+*.swo
+*~

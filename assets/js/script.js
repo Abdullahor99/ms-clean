@@ -161,14 +161,14 @@
 	// banner-carousel
 	if ($('.banner-carousel').length) {
         $('.banner-carousel').owlCarousel({
-            loop:false,
+            loop:true,
 			margin:0,
 			nav:true,
 			animateOut: 'fadeOut',
     		animateIn: 'fadeIn',
     		active: true,
 			smartSpeed: 1000,
-			/*autoplay: 6000,*/
+			autoplay: 8000,
             navText: [ '<span class="icon-6"></span>', '<span class="icon-7"></span>' ],
             responsive:{
                 0:{
@@ -435,26 +435,8 @@
 	}
 
 
-	//Search Popup
-	if($('#search-popup').length){
-		
-		//Show Popup
-		$('.search-toggler').on('click', function() {
-			$('#search-popup').addClass('popup-visible');
-		});
-		$(document).keydown(function(e){
-	        if(e.keyCode === 27) {
-	            $('#search-popup').removeClass('popup-visible');
-	        }
-	    });
-		//Hide Popup
-		$('.close-search,.search-popup .overlay-layer').on('click', function() {
-			$('#search-popup').removeClass('popup-visible');
-		});
-	}
 
-
-	if ($(".odometer").length) {
+if ($(".odometer").length) {
 	    var odo = $(".odometer");
 	    odo.each(function () {
 	      $(this).appear(function () {

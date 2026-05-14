@@ -8,8 +8,6 @@
 .main-menu .navigation > li > ul > li > ul > li > a:hover,
 .scroll-to-top .scroll-bar-text,
 .sec-title .sub-title,
-.news-block-one .inner-box .lower-content .post-info li a,
-.news-block-one .inner-box .lower-content h3 a:hover,
 .main-footer .logo-widget .info-list li a:hover,
 .main-footer .links-list li a:hover,
 .main-footer .copyright p a:hover,
@@ -17,7 +15,6 @@
 .offer-block-one .inner-box h3 a:hover,
 .service-block-one .inner-box h3 a:hover,
 .project-block-two .inner-box .text-box h3 a:hover,
-.news-section .sec-title a:hover,
 .project-block-two .inner-box .text-box .link a:hover,
 .project-style-three .project-block-two .inner-box .text-box h3 a:hover,
 .testimonial-block-one .inner-box .author-box .designation,
@@ -33,12 +30,6 @@
 .header-style-five .main-menu .navigation > li:hover > a,
 .service-block-three .inner-box h3 a:hover,
 .service-block-three .inner-box .link a:hover,
-.news-block-two .inner-box .lower-content .post-info li a:hover,
-.news-block-two .inner-box .lower-content h3 a:hover,
-.blog-sidebar .category-widget .category-list li a:hover,
-.blog-sidebar .category-widget .category-list li a:hover:before,
-.blog-sidebar .post-widget .post h5 a:hover,
-.blog-details-content .comment-inner .comment .info li a:hover,
 .contact-style-three .info-content .info-list li p a:hover
 
 {
@@ -55,15 +46,11 @@
 .project-block-one .inner-box .image-box .overlay-image:before,
 .testimonial-section .testimonial-block .image-box .icon-box,
 .working-block-one .inner-box .icon-box span,
-.news-block-one .inner-box .lower-content .post-info li:before,
-.news-block-one .inner-box .lower-content .post-info li a:before,
 .video-section.alternat-2 .bg-layer:before,
 .fluid-section .left-column,
 .fluid-section .left-column .content-box:before,
 .pagination li a:hover,
-.pagination li a.current,
-.blog-sidebar .post-widget .post .post-thumb,
-.blog-sidebar .tags-widget .tags-list li a:hover
+.pagination li a.current
 
 {
   background: var(--theme-color);
@@ -84,10 +71,6 @@
 .service-block-three .inner-box:hover,
 .pagination li a:hover,
 .pagination li a.current,
-.blog-sidebar .search-widget .search-form .form-group input:focus,
-.blog-sidebar .tags-widget .tags-list li a:hover,
-.blog-details-content .comments-form-area .form-inner .form-group input:focus,
-.blog-details-content .comments-form-area .form-inner .form-group textarea:focus,
 .contact-style-three .form-inner .form-group input:focus,
 .contact-style-three .form-inner .form-group textarea:focus
 

@@ -144,12 +144,7 @@
     display: none;
   }
 
-  .blog-standard-content,
-  .blog-details-content{
-    margin-right: 0px;
-  }
-
-  .contact-style-three .info-content{
+.contact-style-three .info-content{
     margin-left: 0px;
   }
 
@@ -371,11 +366,7 @@
     margin-bottom: 40px;
   }
 
-  .blog-details-content{
-    margin-bottom: 40px;
-  }
-
-  .contact-style-three .info-content{
+.contact-style-three .info-content{
     margin-top: 30px;
   }
 
@@ -446,8 +437,7 @@
     padding: 65px 0px 70px 0px;
   }
 
-  .working-section,
-  .news-section{
+  .working-section{
     padding: 65px 0px 35px 0px;
   }
 
@@ -538,14 +528,7 @@
     padding: 65px 0px 35px 0px;
   }
 
-  .news-section .sec-title a{
-    position: relative;
-    display: inline-block;
-    top: 0px;
-    margin-top: 15px;
-  }
-
-  .fluid-section .left-column .image-box{
+.fluid-section .left-column .image-box{
     position: relative;
     width: 100%;
   }
@@ -715,8 +698,6 @@
   .appointment-area,
   .faq-page-section,
   .faq-form-section,
-  .blog-grid,
-  .sidebar-page-container,
   .contact-style-three{
     padding: 70px 0px;
   }
@@ -730,11 +711,7 @@
     padding: 65px 0px 10px 0px;
   }
 
-  .sidebar-page-container .pagination-wrapper{
-    padding-top: 40px;
-  }
-
-  .transforming-section .title-text h2{
+.transforming-section .title-text h2{
     font-size: 30px;
     line-height: 40px;
   }
@@ -761,36 +738,7 @@
     width: 100%;
   }
 
-  .news-block-two .inner-box .lower-content .post-info li{
-    margin-right: 20px;
-  }
-
-  .news-block-two .inner-box .lower-content .post-info li:last-child{
-    margin-right: 0px;
-  }
-
-  .news-block-two .inner-box .lower-content .post-info li:before{
-    right: -16px; 
-  }
-
-  .blog-details-content .comment-inner .comment{
-    padding-left: 30px;
-    padding-right: 30px;
-  }
-
-  .blog-details-content .comment-inner .comment .thumb-box{
-    position: relative;
-    left: 0px;
-    top: 0px;
-    margin-bottom: 20px;
-  }
-
-  .blog-details-content .comment-inner .comment.replay-comment{
-    padding-left: 0px;
-    padding-right: 0px;
-  }
-
-  .banner-style-three .content-box{
+.banner-style-three .content-box{
     float: none;
     width: 100%;
     padding-left: 30px;
@@ -819,7 +767,6 @@
     display: block;
   }
 
-  .main-header .search-toggler,
   .main-header .nav-btn{
     display: none;
   }
@@ -872,15 +819,6 @@
 
   .appointment-form .date-box .nice-select{
     width: 90px;
-  }
-
-  .news-block-two .inner-box .lower-content .post-info{
-    display: block;
-  }
-
-  .blog-details-content .comments-form-area .form-inner{
-    padding-left: 30px;
-    padding-right: 30px;
   }
 
 }
