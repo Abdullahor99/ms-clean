@@ -932,7 +932,7 @@ img {
   padding-left: 30px;
 }
 
-.header-top .info-list li:before{
+.header-top .info-list li:not(:last-child):before{
   position: absolute;
   content: '';
   background: var(--theme-color);
