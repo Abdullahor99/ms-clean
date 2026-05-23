@@ -5352,7 +5352,6 @@ html.lenis {
 .appointment-checkbox .single-checkbox{
   position: relative;
   display: inline-block;
-  float: left;
   margin-right: 30px;
 }
 .appointment-checkbox label {
@@ -5446,19 +5445,12 @@ html.lenis {
   display: block;
   width: 380px;
 }
-.appointment-form .date-box .icon{
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  right: 20px;
-  color: #898989;
-  font-size: 16px;
-}
+
+
 .appointment-form .date-box .icon span:before{
   position: relative;
   top: 2px;
 }
-
 
 .appointment-form .time-box{
   position: relative;
@@ -5864,6 +5856,258 @@ html.lenis {
   max-width: 150px;
   @media (min-width: 860px) {
     max-width: 250px;
+  }
+}
+
+
+/* === Appointment Form v2 === */
+
+.appointment-form input[type="tel"],
+.appointment-form input[type="number"] {
+  position: relative;
+  display: block;
+  background: #ffffff;
+  border: 1px solid #dddddd;
+  width: 100%;
+  height: 40px;
+  color: #444444;
+  font-size: 18px;
+  font-weight: 400;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 0px;
+  transition: all 500ms ease;
+  font-family: 'Barlow', sans-serif;
+}
+.appointment-form input[type="tel"]:focus,
+.appointment-form input[type="number"]:focus {
+  border-color: var(--theme-color);
+}
+
+/* Radio buttons in appointment-checkbox (Reinigung art) */
+.appointment-checkbox input[type="radio"] {
+  display: none;
+}
+.appointment-checkbox input[type="radio"] + label span {
+  position: absolute;
+  display: block;
+  top: 10px;
+  left: 0;
+  width: 13px;
+  height: 13px;
+  vertical-align: middle;
+  background-color: transparent;
+  border: 1px solid #8e8f8f;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 300ms ease;
+}
+.appointment-checkbox input[type="radio"]:checked + label span:before {
+  opacity: 1;
+  background: var(--theme-color);
+  border-radius: 50%;
+}
+
+/* Service selection cards */
+.service-card-group {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.service-card {
+  flex: 1;
+  min-width: 140px;
+  position: relative;
+}
+.service-card input[type="radio"] {
+  display: none;
+}
+.service-card-label {
+  display: block;
+  border: 2px solid #dddddd;
+  padding: 18px 20px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 300ms ease;
+  font-weight: 600;
+  color: #555555;
+  font-family: var(--title-font);
+  font-size: 16px;
+}
+.service-card-label i {
+  display: block;
+  font-size: 26px;
+  margin-bottom: 8px;
+  transition: color 300ms ease;
+}
+.service-card input[type="radio"]:checked + .service-card-label {
+  border-color: var(--theme-color);
+  color: var(--theme-color);
+  background: rgba(0, 0, 0, 0.02);
+}
+.service-card-label:hover {
+  border-color: #aaaaaa;
+}
+
+/* Dynamic service sections */
+.service-section {
+  margin-top: 5px;
+}
+.service-section .address-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.service-section .address-row .single-box {
+  margin-bottom: 0;
+}
+
+/* Möbelliste sidebar */
+.moebel-sidebar {
+  background: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  position: sticky;
+  top: 20px;
+}
+.moebel-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.moebel-sidebar-header h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #010101;
+  font-family: var(--title-font);
+}
+.volume-badge {
+  background: var(--theme-color);
+  color: #ffffff;
+  padding: 4px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Barlow', sans-serif;
+  white-space: nowrap;
+}
+#moebel-search {
+  width: 100%;
+  height: 36px;
+  border: 1px solid #dddddd;
+  padding: 0 12px;
+  font-size: 15px;
+  margin-bottom: 10px;
+  font-family: 'Barlow', sans-serif;
+  color: #444444;
+  background: #ffffff;
+  transition: border-color 300ms ease;
+}
+#moebel-search:focus {
+  border-color: var(--theme-color);
+  outline: none;
+}
+.moebel-list {
+  max-height: 420px;
+  overflow-y: auto;
+}
+.moebel-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #eeeeee;
+  font-size: 15px;
+}
+.moebel-item.hidden-item {
+  display: none;
+}
+.moebel-name {
+  flex: 1;
+  color: #444444;
+  font-family: 'Barlow', sans-serif;
+}
+.moebel-counter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.counter-btn {
+  width: 28px;
+  height: 28px;
+  background: #ffffff;
+  border: 1px solid #dddddd !important;
+  color: #333333;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 200ms ease;
+  padding: 0;
+  line-height: 1;
+}
+.counter-btn:hover {
+  background: var(--theme-color);
+  color: #ffffff;
+  border-color: var(--theme-color) !important;
+}
+.counter-value {
+  min-width: 24px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 15px;
+  color: #010101;
+  font-family: 'Barlow', sans-serif;
+}
+.counter-value.active-count {
+  color: var(--theme-color);
+}
+
+/* Status message after form submit */
+.form-status-message {
+  padding: 14px 20px;
+  margin-bottom: 24px;
+  font-size: 16px;
+  font-family: 'Barlow', sans-serif;
+}
+.form-status-message.success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+.form-status-message.error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Section separator heading */
+.service-section .inner-title.section-heading {
+  border-left: 3px solid var(--theme-color);
+  padding-left: 12px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 767px) {
+  .service-card-group {
+    flex-direction: column;
+  }
+  .service-section .address-row {
+    grid-template-columns: 1fr;
+  }
+  .moebel-sidebar {
+    margin-top: 30px;
+    position: static;
+  }
+  #section-umzug .col-xl-8,
+  #section-umzug .col-xl-4 {
+    width: 100% !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
   }
 }
 

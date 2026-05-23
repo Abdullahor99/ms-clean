@@ -215,7 +215,7 @@
 
         <!-- page-title -->
         <section class="page-title p_relative">
-            <div class="bg-layer" style="background-image: url(assets/images/background/page-title.jpg);"></div>
+            <div class="bg-layer" style="background-image: url(assets/real-images/kontakt.jpg);"></div>
             <div class="auto-container">
                 <div class="content-box">
                     <h1>Angebot anfordern</h1>
@@ -239,115 +239,307 @@
                 <div class="row">
                     <div class="col-xl-9">
                         <div class="appointment-form-box">
-                            <form class="appointment-form" name="appointment-form" action="sendemail.php" method="post">
 
+                            <!-- Status message after redirect -->
+                            <div id="form-status" style="display:none;" class="form-status-message"></div>
+
+                            <form class="appointment-form" name="appointment-form" action="sendemail-appointment.php" method="post">
+
+                                <!-- Hidden fields required by sendemail-appointment.php -->
+                                <input type="hidden" name="subject" value="Angebotsanfrage – Ms Clean">
+                                <input type="hidden" name="message" id="hidden-message">
+
+                                <!-- 1. Service selection -->
                                 <div class="single-box">
                                     <div class="inner-title">
                                         <h3>Gewünschte Leistung</h3>
                                     </div>
-                                    <div class="appointment-checkbox">
-                                        <div class="single-checkbox">
-                                            <input type="checkbox" name="leistung-kuechenmontage" id="leistung-1">
-                                            <label for="leistung-1"><span></span>Küchenmontage</label>
+                                    <div class="service-card-group">
+                                        <div class="service-card">
+                                            <input type="radio" name="service" id="service-kuechenmontage" value="kuechenmontage">
+                                            <label class="service-card-label" for="service-kuechenmontage">
+                                                <i class="fas fa-screwdriver-wrench"></i>
+                                                Küchenmontage
+                                            </label>
                                         </div>
-                                        <div class="single-checkbox">
-                                            <input type="checkbox" name="leistung-reinigung" id="leistung-2">
-                                            <label for="leistung-2"><span></span>Reinigung</label>
+                                        <div class="service-card">
+                                            <input type="radio" name="service" id="service-reinigung" value="reinigung">
+                                            <label class="service-card-label" for="service-reinigung">
+                                                <i class="fas fa-broom"></i>
+                                                Reinigung
+                                            </label>
                                         </div>
-                                        <div class="single-checkbox">
-                                            <input type="checkbox" name="leistung-umzug" id="leistung-3">
-                                            <label for="leistung-3"><span></span>Umzug</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="single-box">
-                                    <div class="inner-title">
-                                        <h3>Die Leistung ist für</h3>
-                                    </div>
-                                    <div class="appointment-checkbox">
-                                        <div class="single-checkbox">
-                                            <input type="checkbox" name="kunde-privat" id="privat-1" checked>
-                                            <label for="privat-1"><span></span>Privat</label>
-                                        </div>
-                                        <div class="single-checkbox">
-                                            <input type="checkbox" name="kunde-gewerbe" id="gewerbe-1">
-                                            <label for="gewerbe-1"><span></span>Gewerbe / Unternehmen</label>
+                                        <div class="service-card">
+                                            <input type="radio" name="service" id="service-umzug" value="umzug">
+                                            <label class="service-card-label" for="service-umzug">
+                                                <i class="fas fa-truck-moving"></i>
+                                                Umzug
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="single-box">
-                                    <div class="inner-title pt_15">
-                                        <h3>Wunschtermin (optional)*</h3>
+                                <!-- 2a. Küchenmontage section -->
+                                <div id="section-kuechenmontage" class="service-section" style="display:none;">
+                                    <div class="single-box">
+                                        <div class="inner-title section-heading">
+                                            <h3>Einsatzort</h3>
+                                        </div>
+                                        <input type="text" name="km_strasse" placeholder="Straße und Hausnummer">
+                                        <div class="address-row" style="margin-top:20px;">
+                                            <div class="single-box">
+                                                <div class="inner-title"><h3>PLZ</h3></div>
+                                                <input type="text" name="km_plz" placeholder="z. B. 68161">
+                                            </div>
+                                            <div class="single-box">
+                                                <div class="inner-title"><h3>Ort</h3></div>
+                                                <input type="text" name="km_ort" placeholder="z. B. Mannheim">
+                                            </div>
+                                        </div>
+                                        <div class="address-row" style="margin-top:20px;">
+                                            <div class="single-box selectbox">
+                                                <div class="inner-title"><h3>Wohnung oder Haus?</h3></div>
+                                                <select class="ignore" name="km_wohnungstyp">
+                                                    <option value="">Bitte wählen</option>
+                                                    <option value="Wohnung">Wohnung</option>
+                                                    <option value="Haus">Haus</option>
+                                                    <option value="Gewerbe">Gewerbe</option>
+                                                </select>
+                                            </div>
+                                            <div class="single-box">
+                                                <div class="inner-title"><h3>Etage</h3></div>
+                                                <input type="text" name="km_etage" placeholder="z. B. 2">
+                                            </div>
+                                        </div>
+                                        <div class="single-box selectbox" style="margin-top:20px;">
+                                            <div class="inner-title"><h3>Aufzug vorhanden?</h3></div>
+                                            <select class="ignore" name="km_aufzug">
+                                                <option value="Nein">Nein</option>
+                                                <option value="Ja">Ja</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div class="date-box clearfix">
-                                        <div class="calander-data">
-                                            <select id="dobday"></select>
+                                    <div class="single-box">
+                                        <div class="inner-title section-heading">
+                                            <h3>Küchenbeschreibung</h3>
                                         </div>
-                                        <div class="calander-data">
-                                            <select id="dobmonth"></select>
+                                        <input type="text" name="km_marke" placeholder="Küchenmarke (z. B. IKEA, Nobilia, Häcker)">
+                                        <input type="text" name="km_schraenke" placeholder="Anzahl Schränke / Elemente (optional)" style="margin-top:20px;">
+                                    </div>
+                                </div>
+
+                                <!-- 2b. Reinigung section -->
+                                <div id="section-reinigung" class="service-section" style="display:none;">
+                                    <div class="single-box">
+                                        <div class="inner-title section-heading">
+                                            <h3>Einsatzort</h3>
                                         </div>
-                                        <div class="calander-data">
-                                            <select id="dobyear"></select>
+                                        <input type="text" name="re_strasse" placeholder="Straße und Hausnummer">
+                                        <div class="address-row" style="margin-top:20px;">
+                                            <div class="single-box">
+                                                <div class="inner-title"><h3>PLZ</h3></div>
+                                                <input type="text" name="re_plz" placeholder="z. B. 68161">
+                                            </div>
+                                            <div class="single-box">
+                                                <div class="inner-title"><h3>Ort</h3></div>
+                                                <input type="text" name="re_ort" placeholder="z. B. Mannheim">
+                                            </div>
                                         </div>
-                                        <div class="icon">
-                                            <img src="assets/images/icons/icon-64.png" alt="">
+                                        <div class="address-row" style="margin-top:20px;">
+                                            <div class="single-box selectbox">
+                                                <div class="inner-title"><h3>Objekttyp</h3></div>
+                                                <select class="ignore" name="re_objekttyp">
+                                                    <option value="">Bitte wählen</option>
+                                                    <option value="Wohnung">Wohnung</option>
+                                                    <option value="Haus">Haus</option>
+                                                    <option value="Büro">Büro</option>
+                                                    <option value="Gewerbe">Gewerbe</option>
+                                                </select>
+                                            </div>
+                                            <div class="single-box">
+                                                <div class="inner-title"><h3>Fläche in m²</h3></div>
+                                                <input type="number" name="re_flaeche" placeholder="z. B. 80" min="1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="single-box">
+                                        <div class="inner-title section-heading">
+                                            <h3>Art der Reinigung</h3>
+                                        </div>
+                                        <div class="appointment-checkbox">
+                                            <div class="single-checkbox">
+                                                <input type="radio" name="re_art" id="re-art-1" value="Grundreinigung">
+                                                <label for="re-art-1"><span></span>Grundreinigung</label>
+                                            </div>
+                                            <div class="single-checkbox">
+                                                <input type="radio" name="re_art" id="re-art-2" value="Unterhaltsreinigung">
+                                                <label for="re-art-2"><span></span>Unterhaltsreinigung</label>
+                                            </div>
+                                            <div class="single-checkbox">
+                                                <input type="radio" name="re_art" id="re-art-3" value="Büroreinigung">
+                                                <label for="re-art-3"><span></span>Büroreinigung</label>
+                                            </div>
+                                            <div class="single-checkbox">
+                                                <input type="radio" name="re_art" id="re-art-4" value="Fensterreinigung">
+                                                <label for="re-art-4"><span></span>Fensterreinigung</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="single-box">
-                                    <div class="inner-title">
-                                        <h3>Bevorzugte Uhrzeit (optional)</h3>
-                                    </div>
-                                    <div class="time-box">
-                                        <input type="text" name="time" placeholder="Uhrzeit auswählen">
-                                        <div class="icon">
-                                            <img src="assets/images/icons/icon-63.png" alt="">
+                                <!-- 2c. Umzug section -->
+                                <div id="section-umzug" class="service-section" style="display:none;">
+                                    <div class="row">
+                                        <!-- Left: addresses + extras -->
+                                        <div class="col-xl-8 col-lg-8">
+                                            <div class="single-box">
+                                                <div class="inner-title section-heading">
+                                                    <h3>Auszugsort</h3>
+                                                </div>
+                                                <input type="text" name="uz_von_strasse" placeholder="Straße und Hausnummer">
+                                                <div class="address-row" style="margin-top:20px;">
+                                                    <div class="single-box">
+                                                        <div class="inner-title"><h3>PLZ</h3></div>
+                                                        <input type="text" name="uz_von_plz" placeholder="z. B. 68161">
+                                                    </div>
+                                                    <div class="single-box">
+                                                        <div class="inner-title"><h3>Ort</h3></div>
+                                                        <input type="text" name="uz_von_ort" placeholder="z. B. Mannheim">
+                                                    </div>
+                                                </div>
+                                                <div class="address-row" style="margin-top:20px;">
+                                                    <div class="single-box selectbox">
+                                                        <div class="inner-title"><h3>Wohnung oder Haus?</h3></div>
+                                                        <select class="ignore" name="uz_von_typ">
+                                                            <option value="">Bitte wählen</option>
+                                                            <option value="Wohnung">Wohnung</option>
+                                                            <option value="Haus">Haus</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="single-box">
+                                                        <div class="inner-title"><h3>Etage</h3></div>
+                                                        <input type="text" name="uz_von_etage" placeholder="z. B. 2">
+                                                    </div>
+                                                </div>
+                                                <div class="single-box selectbox" style="margin-top:20px;">
+                                                    <div class="inner-title"><h3>Aufzug vorhanden?</h3></div>
+                                                    <select class="ignore" name="uz_von_aufzug">
+                                                        <option value="Nein">Nein</option>
+                                                        <option value="Ja">Ja</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="single-box">
+                                                <div class="inner-title section-heading">
+                                                    <h3>Zielort</h3>
+                                                </div>
+                                                <input type="text" name="uz_zu_strasse" placeholder="Straße und Hausnummer">
+                                                <div class="address-row" style="margin-top:20px;">
+                                                    <div class="single-box">
+                                                        <div class="inner-title"><h3>PLZ</h3></div>
+                                                        <input type="text" name="uz_zu_plz" placeholder="z. B. 70173">
+                                                    </div>
+                                                    <div class="single-box">
+                                                        <div class="inner-title"><h3>Ort</h3></div>
+                                                        <input type="text" name="uz_zu_ort" placeholder="z. B. Stuttgart">
+                                                    </div>
+                                                </div>
+                                                <div class="address-row" style="margin-top:20px;">
+                                                    <div class="single-box selectbox">
+                                                        <div class="inner-title"><h3>Wohnung oder Haus?</h3></div>
+                                                        <select class="ignore" name="uz_zu_typ">
+                                                            <option value="">Bitte wählen</option>
+                                                            <option value="Wohnung">Wohnung</option>
+                                                            <option value="Haus">Haus</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="single-box">
+                                                        <div class="inner-title"><h3>Etage</h3></div>
+                                                        <input type="text" name="uz_zu_etage" placeholder="z. B. 1">
+                                                    </div>
+                                                </div>
+                                                <div class="single-box selectbox" style="margin-top:20px;">
+                                                    <div class="inner-title"><h3>Aufzug vorhanden?</h3></div>
+                                                    <select class="ignore" name="uz_zu_aufzug">
+                                                        <option value="Nein">Nein</option>
+                                                        <option value="Ja">Ja</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="single-box">
+                                                <div class="inner-title section-heading">
+                                                    <h3>Zusätzliche Services</h3>
+                                                </div>
+                                                <div class="appointment-checkbox">
+                                                    <div class="single-checkbox">
+                                                        <input type="checkbox" name="uz_extra_abbau" id="uz-extra-1">
+                                                        <label for="uz-extra-1"><span></span>Ab-/Aufbau der Möbel</label>
+                                                    </div>
+                                                    <div class="single-checkbox">
+                                                        <input type="checkbox" name="uz_extra_einpack" id="uz-extra-2">
+                                                        <label for="uz-extra-2"><span></span>Einpackservice (professionelle Verpackung)</label>
+                                                    </div>
+                                                    <div class="single-checkbox">
+                                                        <input type="checkbox" name="uz_extra_schutz" id="uz-extra-3">
+                                                        <label for="uz-extra-3"><span></span>Schutzfolierung empfindlicher Möbel</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Right: Möbelliste sidebar -->
+                                        <div class="col-xl-4 col-lg-4">
+                                            <div class="moebel-sidebar">
+                                                <div class="moebel-sidebar-header">
+                                                    <h4>Möbelliste</h4>
+                                                    <div class="volume-badge">Gesamt: <span id="gesamtvolumen">0.00</span> m³</div>
+                                                </div>
+                                                <input type="text" id="moebel-search" placeholder="Möbel suchen …" autocomplete="off">
+                                                <div class="moebel-list">
+                                                    <div class="moebel-item" data-volume="1.0"><span class="moebel-name">Sofa 2-Sitzer</span><div class="moebel-counter"><button type="button" class="counter-btn counter-minus">−</button><span class="counter-value">0</span><button type="button" class="counter-btn counter-plus">+</button></div></div>
+                                                    <div class="moebel-item" data-volume="1.5"><span class="moebel-name">Sofa 3-Sitzer</span><div class="moebel-counter"><button type="button" class="counter-btn counter-minus">−</button><span class="counter-value">0</span><button type="button" class="counter-btn counter-plus">+</button></div></div>
+                                                    <div class="moebel-item" data-volume="2.5"><span class="moebel-name">Ecksofa</span><div class="moebel-counter"><button type="button" class="counter-btn counter-minus">−</button><span class="counter-value">0</span><button type="button" class="counter-btn counter-plus">+</button></div></div>
+                                                    <div class="moebel-item" data-volume="0.9"><span class="moebel-name">Bett 90×200</span><div class="moebel-counter"><button type="button" class="counter-btn counter-minus">−</button><span class="counter-value">0</span><button type="button" class="counter-btn counter-plus">+</button></div></div>
+                                                    <div class="moebel-item" data-volume="1.1"><span class="moebel-name">Bett 140×200</span><div class="moebel-counter"><button type="button" class="counter-btn counter-minus">−</button><span class="counter-value">0</span><button type="button" class="counter-btn counter-plus">+</button></div></div>
+                                                    <div class="moebel-item" data-volume="1.4"><span class="moebel-name">Bett 180×200</span><div class="moebel-counter"><button type="button" class="counter-btn counter-minus">−</button><span class="counter-value">0</span><button type="button" class="counter-btn counter-plus">+</button></div></div>
+                                                    <div class="moebel-item" data-volume="1.8"><span class="moebel-name">Boxspringbett</span><div class="moebel-counter"><button type="button" class="counter-btn counter-minus">−</button><span class="counter-value">0</span><button type="button" class="counter-btn counter-plus">+</button></div></div>
+                                                    <div class="moebel-item" data-volume="1.2"><span class="moebel-name">Kleiderschrank 2-türig</span><div class="moebel-counter"><button type="button" class="counter-btn counter-minus">−</button><span class="counter-value">0</span><button type="button" class="counter-btn counter-plus">+</button></div></div>
+                                                    <div class="moebel-item" data-volume="1.8"><span class="moebel-name">Kleiderschrank 3-türig</span><div class="moebel-counter"><button type="button" class="counter-btn counter-minus">−</button><span class="counter-value">0</span><button type="button" class="counter-btn counter-plus">+</button></div></div>
+                                                    <div class="moebel-item" data-volume="2.4"><span class="moebel-name">Kleiderschrank 4-türig</span><div class="moebel-counter"><button type="button" class="counter-btn counter-minus">−</button><span class="counter-value">0</span><button type="button" class="counter-btn counter-plus">+</button></div></div>
+                                                    <div class="moebel-item" data-volume="0.5"><span class="moebel-name">Kühlschrank</span><div class="moebel-counter"><button type="button" class="counter-btn counter-minus">−</button><span class="counter-value">0</span><button type="button" class="counter-btn counter-plus">+</button></div></div>
+                                                    <div class="moebel-item" data-volume="0.4"><span class="moebel-name">Waschmaschine</span><div class="moebel-counter"><button type="button" class="counter-btn counter-minus">−</button><span class="counter-value">0</span><button type="button" class="counter-btn counter-plus">+</button></div></div>
+                                                    <div class="moebel-item" data-volume="0.4"><span class="moebel-name">Geschirrspüler</span><div class="moebel-counter"><button type="button" class="counter-btn counter-minus">−</button><span class="counter-value">0</span><button type="button" class="counter-btn counter-plus">+</button></div></div>
+                                                    <div class="moebel-item" data-volume="0.4"><span class="moebel-name">Trockner</span><div class="moebel-counter"><button type="button" class="counter-btn counter-minus">−</button><span class="counter-value">0</span><button type="button" class="counter-btn counter-plus">+</button></div></div>
+                                                    <div class="moebel-item" data-volume="0.8"><span class="moebel-name">Schreibtisch</span><div class="moebel-counter"><button type="button" class="counter-btn counter-minus">−</button><span class="counter-value">0</span><button type="button" class="counter-btn counter-plus">+</button></div></div>
+                                                    <div class="moebel-item" data-volume="0.9"><span class="moebel-name">Esstisch</span><div class="moebel-counter"><button type="button" class="counter-btn counter-minus">−</button><span class="counter-value">0</span><button type="button" class="counter-btn counter-plus">+</button></div></div>
+                                                    <div class="moebel-item" data-volume="0.3"><span class="moebel-name">Couchtisch</span><div class="moebel-counter"><button type="button" class="counter-btn counter-minus">−</button><span class="counter-value">0</span><button type="button" class="counter-btn counter-plus">+</button></div></div>
+                                                    <div class="moebel-item" data-volume="0.5"><span class="moebel-name">Regal / Kommode</span><div class="moebel-counter"><button type="button" class="counter-btn counter-minus">−</button><span class="counter-value">0</span><button type="button" class="counter-btn counter-plus">+</button></div></div>
+                                                    <div class="moebel-item" data-volume="0.2"><span class="moebel-name">Fernseher</span><div class="moebel-counter"><button type="button" class="counter-btn counter-minus">−</button><span class="counter-value">0</span><button type="button" class="counter-btn counter-plus">+</button></div></div>
+                                                    <div class="moebel-item" data-volume="0.07"><span class="moebel-name">Karton</span><div class="moebel-counter"><button type="button" class="counter-btn counter-minus">−</button><span class="counter-value">0</span><button type="button" class="counter-btn counter-plus">+</button></div></div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="single-box">
-                                    <div class="inner-title">
-                                        <h3>Vorname*</h3>
-                                    </div>
-                                    <input type="text" name="f_name" value="" placeholder="" required="">
-                                </div>
-
-                                <div class="single-box">
-                                    <div class="inner-title">
-                                        <h3>Nachname*</h3>
-                                    </div>
-                                    <input type="text" name="l_name" value="" placeholder="" required="">
-                                </div>
-
-                                <div class="single-box">
-                                    <div class="inner-title">
-                                        <h3>Adresse</h3>
-                                    </div>
-                                    <div class="jobsite-address">
-                                        <input type="text" name="f_strasse" value="" placeholder="Straße und Hausnummer">
-                                        <input type="text" name="f_adresse_zusatz" value="" placeholder="Adresszusatz (optional)">
-                                    </div>
-                                </div>
-
+                                <!-- 3. Contact fields (always visible) -->
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <div class="single-box">
                                             <div class="inner-title">
-                                                <h3>Postleitzahl</h3>
+                                                <h3>Vollständiger Name*</h3>
                                             </div>
-                                            <input type="text" name="f_plz" value="" placeholder="">
+                                            <input type="text" name="username" placeholder="Vor- und Nachname" required="">
                                         </div>
                                     </div>
                                     <div class="col-xl-6">
                                         <div class="single-box">
                                             <div class="inner-title">
-                                                <h3>Stadt</h3>
+                                                <h3>E-Mail-Adresse*</h3>
                                             </div>
-                                            <input type="text" name="f_city" value="" placeholder="">
+                                            <input type="email" name="email" placeholder="ihre@email.de" required="">
                                         </div>
                                     </div>
                                 </div>
@@ -358,27 +550,40 @@
                                             <div class="inner-title">
                                                 <h3>Telefonnummer*</h3>
                                             </div>
-                                            <input type="tel" name="f_telefon" value="" placeholder="" required="">
+                                            <input type="tel" name="phone" placeholder="z. B. 0621 1234567" required="">
                                         </div>
                                     </div>
                                     <div class="col-xl-6">
                                         <div class="single-box">
                                             <div class="inner-title">
-                                                <h3>E-Mail-Adresse*</h3>
+                                                <h3>Wunschtermin (optional)</h3>
                                             </div>
-                                            <input type="email" name="f_email" value="" placeholder="" required="">
+                                            <div class="date-box clearfix">
+                                                <div class="calander-data">
+                                                    <select id="dobday"></select>
+                                                </div>
+                                                <div class="calander-data">
+                                                    <select id="dobmonth"></select>
+                                                </div>
+                                                <div class="calander-data">
+                                                    <select id="dobyear"></select>
+                                                </div>
+                                                <div class="icon">
+                                                    <img src="assets/images/icons/icon-64.png" alt="">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="single-box">
                                     <div class="inner-title">
-                                        <h3>Ihr Anliegen / Beschreibung</h3>
+                                        <h3>Anmerkungen / Beschreibung</h3>
                                     </div>
-                                    <textarea name="f_nachricht" placeholder="Beschreiben Sie kurz Ihr Vorhaben (z. B. Küchenmarke, Umfang, besondere Anforderungen) …"></textarea>
+                                    <textarea name="f_anmerkungen" placeholder="Beschreiben Sie kurz Ihr Vorhaben oder besondere Anforderungen …"></textarea>
                                 </div>
 
-<div class="appointment-form-button">
+                                <div class="appointment-form-button">
                                     <button type="submit" class="theme-btn">Angebot anfordern</button>
                                 </div>
 
@@ -472,12 +677,175 @@
     <script src="assets/js/nav-tool.js"></script>
     <script src="assets/js/scrolltop.min.js"></script>
     <script src="assets/js/odometer.js"></script>
-    <script src="assets/js/timePicker.js"></script> 
-    <script src="assets/js/dobpicker_script.js"></script>
+    <script src="assets/js/timePicker.js"></script>
     <script src="assets/js/dobpicker.js"></script>
 
     <!-- main-js -->
     <script src="assets/js/script.js"></script>
+
+    <script>
+    $(document).ready(function() {
+
+        // --- Date Picker: future dates, German months ---
+        // dobpicker formula: minimum = now - minimumAge, maximum = minimum - maximumAge
+        // minimumAge: -2 → minimum = 2026-(-2) = 2028 (highest year shown)
+        // maximumAge:  2 → maximum = 2028-2 = 2026 (lowest year shown)  → shows 2028, 2027, 2026
+        $.dobPicker({
+            daySelector:   '#dobday',
+            monthSelector: '#dobmonth',
+            yearSelector:  '#dobyear',
+            dayDefault:    'Tag',
+            monthDefault:  'Monat',
+            yearDefault:   'Jahr',
+            minimumAge: -2,
+            maximumAge:  2
+        });
+        var deMonths = ['Januar','Februar','März','April','Mai','Juni',
+                        'Juli','August','September','Oktober','November','Dezember'];
+        $('#dobmonth option:not(:first)').each(function(i) { $(this).text(deMonths[i]); });
+        $('#dobday, #dobmonth, #dobyear').niceSelect('update');
+
+        // --- URL-based pre-selection and status message ---
+        var urlParams = new URLSearchParams(window.location.search);
+        var preselect = urlParams.get('service');
+        if (preselect) {
+            $('input[name="service"][value="' + preselect + '"]').prop('checked', true);
+            showService(preselect);
+        }
+        var status = urlParams.get('status');
+        if (status === 'Erfolgreich') {
+            $('#form-status').addClass('success')
+                .text('Vielen Dank! Ihre Anfrage wurde erfolgreich gesendet. Wir melden uns innerhalb von 24 Stunden bei Ihnen.')
+                .show();
+        } else if (status === 'Fehler') {
+            $('#form-status').addClass('error')
+                .text('Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt per E-Mail.')
+                .show();
+        }
+
+        // --- Service section toggle ---
+        function showService(val) {
+            $('.service-section').hide();
+            if (val) {
+                $('#section-' + val).slideDown(250);
+                initVisibleSelects();
+            }
+        }
+
+        function initVisibleSelects() {
+            $('.service-section:visible select.ignore').each(function() {
+                if (!$(this).data('ns-init')) {
+                    $(this).niceSelect();
+                    $(this).data('ns-init', true);
+                }
+            });
+        }
+
+        $('input[name="service"]').on('change', function() {
+            showService($(this).val());
+        });
+
+        // --- Möbelliste: +/- counters ---
+        $('.moebel-list').on('click', '.counter-plus', function() {
+            var $v = $(this).siblings('.counter-value');
+            var n = parseInt($v.text()) + 1;
+            $v.text(n).toggleClass('active-count', n > 0);
+            updateVolume();
+        });
+        $('.moebel-list').on('click', '.counter-minus', function() {
+            var $v = $(this).siblings('.counter-value');
+            var n = Math.max(0, parseInt($v.text()) - 1);
+            $v.text(n).toggleClass('active-count', n > 0);
+            updateVolume();
+        });
+
+        function updateVolume() {
+            var total = 0;
+            $('.moebel-item').each(function() {
+                total += parseInt($(this).find('.counter-value').text()) * parseFloat($(this).data('volume'));
+            });
+            $('#gesamtvolumen').text(total.toFixed(2));
+        }
+
+        // --- Möbel search filter ---
+        $('#moebel-search').on('input', function() {
+            var q = $(this).val().toLowerCase().trim();
+            $('.moebel-item').each(function() {
+                $(this).toggleClass('hidden-item',
+                    q.length > 0 && $(this).find('.moebel-name').text().toLowerCase().indexOf(q) === -1);
+            });
+        });
+
+        // --- Pre-submit: pack all fields into hidden message ---
+        $('.appointment-form').on('submit', function() {
+            var lines = [];
+            var svc = $('input[name="service"]:checked').val() || '';
+            var svcLabel = { kuechenmontage: 'Küchenmontage', reinigung: 'Reinigung', umzug: 'Umzug' };
+            lines.push('Gewünschte Leistung: ' + (svcLabel[svc] || 'Nicht ausgewählt'));
+            lines.push('');
+
+            if (svc === 'kuechenmontage') {
+                lines.push('=== Küchenmontage ===');
+                lines.push('Straße: '          + $('[name="km_strasse"]').val());
+                lines.push('PLZ: '             + $('[name="km_plz"]').val());
+                lines.push('Ort: '             + $('[name="km_ort"]').val());
+                lines.push('Typ: '             + $('[name="km_wohnungstyp"]').val());
+                lines.push('Etage: '           + $('[name="km_etage"]').val());
+                lines.push('Aufzug: '          + $('[name="km_aufzug"]').val());
+                lines.push('Küchenmarke: '     + $('[name="km_marke"]').val());
+                lines.push('Anzahl Schränke: ' + $('[name="km_schraenke"]').val());
+
+            } else if (svc === 'reinigung') {
+                lines.push('=== Reinigung ===');
+                lines.push('Straße: '             + $('[name="re_strasse"]').val());
+                lines.push('PLZ: '                + $('[name="re_plz"]').val());
+                lines.push('Ort: '                + $('[name="re_ort"]').val());
+                lines.push('Objekttyp: '          + $('[name="re_objekttyp"]').val());
+                lines.push('Fläche: '             + $('[name="re_flaeche"]').val() + ' m²');
+                lines.push('Art der Reinigung: '  + ($('[name="re_art"]:checked').val() || 'Nicht ausgewählt'));
+
+            } else if (svc === 'umzug') {
+                lines.push('=== Umzug ===');
+                lines.push('--- Auszugsort ---');
+                lines.push('Straße: ' + $('[name="uz_von_strasse"]').val());
+                lines.push('PLZ: '    + $('[name="uz_von_plz"]').val() + '  Ort: ' + $('[name="uz_von_ort"]').val());
+                lines.push('Typ: '    + $('[name="uz_von_typ"]').val()  + '  Etage: ' + $('[name="uz_von_etage"]').val() + '  Aufzug: ' + $('[name="uz_von_aufzug"]').val());
+                lines.push('--- Zielort ---');
+                lines.push('Straße: ' + $('[name="uz_zu_strasse"]').val());
+                lines.push('PLZ: '    + $('[name="uz_zu_plz"]').val()  + '  Ort: ' + $('[name="uz_zu_ort"]').val());
+                lines.push('Typ: '    + $('[name="uz_zu_typ"]').val()   + '  Etage: ' + $('[name="uz_zu_etage"]').val() + '  Aufzug: ' + $('[name="uz_zu_aufzug"]').val());
+                lines.push('');
+                lines.push('--- Möbelliste ---');
+                var hasItems = false;
+                $('.moebel-item').each(function() {
+                    var n = parseInt($(this).find('.counter-value').text());
+                    if (n > 0) {
+                        lines.push('  ' + $(this).find('.moebel-name').text() + ': ' + n + 'x');
+                        hasItems = true;
+                    }
+                });
+                if (!hasItems) lines.push('  (keine Möbel angegeben)');
+                lines.push('Gesamtvolumen: ' + $('#gesamtvolumen').text() + ' m³');
+                var extras = [];
+                if ($('[name="uz_extra_abbau"]').is(':checked'))  extras.push('Ab-/Aufbau der Möbel');
+                if ($('[name="uz_extra_einpack"]').is(':checked')) extras.push('Einpackservice');
+                if ($('[name="uz_extra_schutz"]').is(':checked'))  extras.push('Schutzfolierung');
+                if (extras.length) { lines.push(''); lines.push('Zusatzleistungen: ' + extras.join(', ')); }
+            }
+
+            lines.push('');
+            var tag = $('#dobday').val(), mon = $('#dobmonth').val(), jahr = $('#dobyear').val();
+            if (tag && tag !== '' && mon !== '' && jahr !== '') {
+                lines.push('Wunschtermin: ' + tag + '. ' + mon + ' ' + jahr);
+            }
+            var anm = $('[name="f_anmerkungen"]').val().trim();
+            if (anm) lines.push('Anmerkungen: ' + anm);
+
+            $('#hidden-message').val(lines.join('\n'));
+        });
+
+    });
+    </script>
 
 </body><!-- End of .page_wrapper -->
 </html>
