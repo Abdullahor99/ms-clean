@@ -8,7 +8,8 @@
       "Bash(sed -i '' 's|<h2>page is not found\\\\. <br>the page is doesn.*exist or deleted</h2>|<h2>Diese Seite wurde nicht gefunden. <br>Die Seite existiert nicht oder wurde gelöscht.</h2>|' error.html)",
       "Bash(sed -i '' 's|<a href=\"index.html\" class=\"theme-btn btn-one\"><span>Go To Home</span></a>|<a href=\"index.html\" class=\"theme-btn btn-one\"><span>Zur Startseite</span></a>|' error.html)",
       "Bash(python3 *)",
-      "Bash(grep -n \"nice-select\\\\|niceSelect\\\\|$.*select\" /Users/abdullahorabi/web_projects/Kitchnox/assets/js/script.js)"
+      "Bash(grep -n \"nice-select\\\\|niceSelect\\\\|$.*select\" /Users/abdullahorabi/web_projects/Kitchnox/assets/js/script.js)",
+      "Bash(grep *)"
     ]
   }
 }
