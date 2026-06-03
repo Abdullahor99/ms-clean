@@ -26,3 +26,6 @@ npm-debug.log*
 *.swp
 *.swo
 *~
+
+# SMTP credentials — never commit
+smtp-config.php

@@ -1,41 +1,50 @@
 <?php
 
-// Define some constants
-define( "RECIPIENT_NAME", "MSClean" );
-define( "RECIPIENT_EMAIL", "kontakt@msclean-mannheim.de" );
+require_once __DIR__ . '/smtp-config.php';
+require_once __DIR__ . '/phpmailer/Exception.php';
+require_once __DIR__ . '/phpmailer/PHPMailer.php';
+require_once __DIR__ . '/phpmailer/SMTP.php';
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
-// Read the form values
-$success = false;
-$userName = isset( $_POST['username'] ) ? preg_replace( "/[^\s\S\.\-\_\@a-zA-Z0-9]/", "", $_POST['username'] ) : "";
-$senderEmail = isset( $_POST['email'] ) ? preg_replace( "/[^\.\-\_\@a-zA-Z0-9]/", "", $_POST['email'] ) : "";
-$userPhone = isset( $_POST['phone'] ) ? preg_replace( "/[^\s\S\.\-\_\@a-zA-Z0-9]/", "", $_POST['phone'] ) : "";
-$userSubject = isset( $_POST['subject'] ) ? preg_replace( "/[^\s\S\.\-\_\@a-zA-Z0-9]/", "", $_POST['subject'] ) : "";
-$message = isset( $_POST['message'] ) ? preg_replace( "/(From:|To:|BCC:|CC:|Subject:|Content-Type:)/", "", $_POST['message'] ) : "";
+define('RECIPIENT_NAME',  'MS Clean');
+define('RECIPIENT_EMAIL', 'kontakt@msclean-mannheim.de');
 
-// If all values exist, send the email
-if ( $userName && $senderEmail && $userPhone && $message) {
-  $recipient = RECIPIENT_NAME . " <" . RECIPIENT_EMAIL . ">";
-  $subject   = "Neue Angebotsanfrage von " . $userName . " \xe2\x80\x93 Ms Clean";
-  $headers   = "From: Ms Clean Website <noreply@ms-clean.de>\r\n"
-             . "Reply-To: " . $senderEmail . "\r\n"
-             . "Content-Type: text/plain; charset=UTF-8\r\n";
-  $msgBody   = "Name: "    . $userName    . "\n"
-             . "E-Mail: "  . $senderEmail . "\n"
-             . "Telefon: " . $userPhone   . "\n\n"
-             . "Anfrage:\n" . $message;
-  $success = mail( $recipient, $subject, $msgBody, $headers );
+$userName    = isset($_POST['username']) ? preg_replace("/[^\s\S\.\-\_\@a-zA-Z0-9]/", "", $_POST['username']) : "";
+$senderEmail = isset($_POST['email'])    ? preg_replace("/[^\.\-\_\@a-zA-Z0-9]/",    "", $_POST['email'])    : "";
+$userPhone   = isset($_POST['phone'])    ? preg_replace("/[^\s\S\.\-\_\@a-zA-Z0-9]/", "", $_POST['phone'])   : "";
+$message     = isset($_POST['message'])  ? preg_replace("/(From:|To:|BCC:|CC:|Subject:|Content-Type:)/", "", $_POST['message']) : "";
 
-  if ( $success ) {
-    header('Location: appointment.html?status=Erfolgreich');
-  } else {
+if ($userName && $senderEmail && $userPhone && $message) {
+    $mail = new PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host        = SMTP_HOST;
+        $mail->SMTPAuth    = SMTP_AUTH;
+        $mail->Username    = SMTP_USER;
+        $mail->Password    = SMTP_PASSWORD;
+        $mail->SMTPSecure  = SMTP_SECURE;
+        $mail->SMTPAutoTLS = false;
+        $mail->Port        = SMTP_PORT;
+        $mail->CharSet     = 'UTF-8';
+
+        $mail->setFrom(SMTP_FROM, 'MS Clean Website');
+        $mail->addReplyTo($senderEmail, $userName);
+        $mail->addAddress(RECIPIENT_EMAIL, RECIPIENT_NAME);
+
+        $mail->Subject = "Neue Angebotsanfrage von " . $userName . " \xe2\x80\x93 Ms Clean";
+        $mail->Body    = "Name: "    . $userName    . "\n"
+                       . "E-Mail: "  . $senderEmail . "\n"
+                       . "Telefon: " . $userPhone   . "\n\n"
+                       . "Anfrage:\n" . $message;
+
+        $mail->send();
+        header('Location: appointment.html?status=Erfolgreich');
+    } catch (Exception $e) {
+        header('Location: appointment.html?status=Fehler');
+    }
+} else {
     header('Location: appointment.html?status=Fehler');
-  }
 }
-
-else{
-	//Set Location After Unsuccessful Submission
-  	header('Location: appointment.html?status=Fehler');
-}
-
-?>
