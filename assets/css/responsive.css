@@ -415,7 +415,8 @@
     padding: 70px 0px;
   }
 
-  .sec-title h2{
+  .sec-title h2,
+  .sec-title h1{
     font-size: 30px;
     line-height: 40px;
   }

@@ -110,6 +110,19 @@ Update this file after every major change.
 
 ## Changelog
 
+### 2026-06-20 — Business address change: Recklinghausen → Frankenthal
+- Updated registered business address across all 11 active pages: street `Hertener Straße 64` → `Schnurgasse 14`, postal code `45657` → `67227`, city `Recklinghausen` → `Frankenthal` (JSON-LD `PostalAddress` + visible Impressum text)
+- `impressum.html` "Zuständige Aufsichtsbehörde" updated to `Gewerbeamt der Stadt Frankenthal` (street/PLZ for the authority dropped pending confirmation of the correct Frankenthal office address)
+
+### 2026-06-07 — SEO pass: head metadata, structured data, image accessibility
+- Added unique `<meta name="description">`, `<link rel="canonical">`, Open Graph and Twitter Card tags to all 11 active pages
+- Fixed homepage missing `<h1>` — converted the `.sec-title` heading "Ihr zuverlässiger Partner für Küche, Reinigung & Umzug in der Region" from `<h2>` to `<h1>` (extended `.sec-title h2` CSS rules in `style.css`/`responsive.css` to also cover `.sec-title h1` so the visual style is unchanged)
+- Removed `maximum-scale=1.0, user-scalable=0` from the viewport meta site-wide (was disabling pinch-zoom — a mobile-usability/accessibility issue)
+- Added `HomeAndConstructionBusiness` JSON-LD structured data (LocalBusiness schema with NAP, service area, services) to every page's `<head>`
+- Filled in descriptive German `alt` text on all `assets/real-images/*` content photos and footer logos (decorative icons intentionally kept `alt=""`)
+- Added `loading="lazy"` to below-the-fold images site-wide
+- Standardized a few generic page titles (`kuechenmontage.html`, `contact.html`, `appointment.html`, `faq.html`) to include "Mannheim"/region for local-search relevance
+
 ### 2026-05-14 — Full rebrand + German translation
 - Rebranded all active pages from "Kitchnox" template to "MS Clean"
 - Preloader animation changed from "kitchnox" (8 letters) to "msclean" (7 letters) across all pages

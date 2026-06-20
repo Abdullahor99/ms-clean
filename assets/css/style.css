@@ -594,7 +594,8 @@ img {
   top: 12px;
 }
 
-.sec-title h2{
+.sec-title h2,
+.sec-title h1{
   display: block;
   font-size: 45px;
   line-height: 54px;
