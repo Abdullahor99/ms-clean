@@ -10,24 +10,40 @@
 
   gtag('config', 'AW-18256090192');
 </script>
+<!-- Event snippet for Angebot Anfrage conversion page -->
+<script>
+function gtag_report_conversion(url) {
+  var callback = function () {
+    if (typeof(url) != 'undefined') {
+      window.location = url;
+    }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18256090192/RDclCIr9zMocENCol4FE',
+      'event_callback': callback
+  });
+  return false;
+}
+</script>
 <meta charset="utf-8">
 <meta name="google-site-verification" content="__3ovrdcaIsLTSGZXzyYJOF7X0T4Cu3PVJIjsD9g7Qc" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, follow">
 
-<title>Kontakt – Ms Clean Mannheim</title>
-<meta name="description" content="Kontaktieren Sie Ms Clean in Mannheim und Umgebung: Rufen Sie an, schreiben Sie uns oder nutzen Sie unser Kontaktformular für ein unverbindliches Festpreisangebot.">
-<link rel="canonical" href="https://msclean-mannheim.de/contact.html">
+<title>Vielen Dank – Ms Clean</title>
+<meta name="description" content="Vielen Dank für Ihre Anfrage bei Ms Clean. Wir melden uns innerhalb von 24 Stunden bei Ihnen.">
+<link rel="canonical" href="https://msclean-mannheim.de/danke.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Kontakt – Ms Clean Mannheim">
-<meta property="og:description" content="Kontaktieren Sie Ms Clean in Mannheim und Umgebung: Rufen Sie an, schreiben Sie uns oder nutzen Sie unser Kontaktformular für ein unverbindliches Festpreisangebot.">
-<meta property="og:url" content="https://msclean-mannheim.de/contact.html">
-<meta property="og:image" content="https://msclean-mannheim.de/assets/real-images/kontakt.jpg">
+<meta property="og:title" content="Vielen Dank – Ms Clean">
+<meta property="og:description" content="Vielen Dank für Ihre Anfrage bei Ms Clean. Wir melden uns innerhalb von 24 Stunden bei Ihnen.">
+<meta property="og:url" content="https://msclean-mannheim.de/danke.html">
+<meta property="og:image" content="https://msclean-mannheim.de/assets/real-images/hero-kueche.jpg">
 <meta property="og:locale" content="de_DE">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Kontakt – Ms Clean Mannheim">
-<meta name="twitter:description" content="Kontaktieren Sie Ms Clean in Mannheim und Umgebung: Rufen Sie an, schreiben Sie uns oder nutzen Sie unser Kontaktformular für ein unverbindliches Festpreisangebot.">
-<meta name="twitter:image" content="https://msclean-mannheim.de/assets/real-images/kontakt.jpg">
+<meta name="twitter:title" content="Vielen Dank – Ms Clean">
+<meta name="twitter:description" content="Vielen Dank für Ihre Anfrage bei Ms Clean. Wir melden uns innerhalb von 24 Stunden bei Ihnen.">
+<meta name="twitter:image" content="https://msclean-mannheim.de/assets/real-images/hero-kueche.jpg">
 
 <!-- Fav Icon -->
 <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
@@ -43,7 +59,6 @@
 <link href="assets/css/jquery.fancybox.min.css" rel="stylesheet">
 <link href="assets/css/animate.css" rel="stylesheet">
 <link href="assets/css/nice-select.css" rel="stylesheet">
-<link href="assets/css/timePicker.css" rel="stylesheet">
 <link href="assets/css/odometer.css" rel="stylesheet">
 <link href="assets/css/elpath.css" rel="stylesheet">
 <link href="assets/css/color.css" id="jssDefault" rel="stylesheet">
@@ -56,7 +71,7 @@
   "@type": "HomeAndConstructionBusiness",
   "name": "Ms Clean – Küchenmontage, Reinigung & Umzug",
   "image": "https://msclean-mannheim.de/assets/images/logo.png",
-  "url": "https://msclean-mannheim.de/contact.html",
+  "url": "https://msclean-mannheim.de/danke.html",
   "telephone": "015780810894",
   "address": {
     "@type": "PostalAddress",
@@ -196,11 +211,12 @@
                             <nav class="main-menu navbar-expand-md navbar-light clearfix">
                                 <div class="collapse navbar-collapse show clearfix" id="navbarSupportedContent">
                                     <ul class="navigation clearfix">
+                                        <li><a href="index.html">Startseite</a></li>
                                         <li><a href="kuechenmontage.html">Küchenmontage</a></li>
                                         <li><a href="reinigung.html">Reinigung</a></li>
                                         <li><a href="umzug.html">Umzug</a></li>
                                         <li><a href="einsatzgebiet.html">Einsatzgebiet</a></li>
-                                        <li class="current"><a href="contact.html">Kontakt</a></li>
+                                        <li><a href="contact.html">Kontakt</a></li>
                                     </ul>
                                 </div>
                             </nav>
@@ -251,13 +267,13 @@
 
         <!-- page-title -->
         <section class="page-title p_relative">
-            <div class="bg-layer" style="background-image: url(assets/real-images/kontakt.jpg);"></div>
+            <div class="bg-layer" style="background-image: url(assets/images/background/page-title.jpg);"></div>
             <div class="auto-container">
                 <div class="content-box">
-                    <h1>Kontakt</h1>
+                    <h1>Vielen Dank!</h1>
                     <ul class="bread-crumb clearfix">
                         <li><a href="index.html">Startseite</a></li>
-                        <li>Kontakt</li>
+                        <li>Danke</li>
                     </ul>
                 </div>
             </div>
@@ -265,63 +281,18 @@
         <!-- page-title end -->
 
 
-        <!-- contact-style-three -->
-        <section class="contact-style-three pt_110 pb_120">
+        <!-- danke-section -->
+        <section class="error-section centred">
             <div class="auto-container">
-                <div class="sec-title mb_50">
-                    <span class="sub-title mb_10">Kontakt aufnehmen</span>
-                    <h2>Wir freuen uns von Ihnen zu hören</h2>
-                </div>
-                <div class="row clearfix">
-                    <div class="col-lg-7 col-md-12 col-sm-12 form-column">
-                        <div class="form-inner">
-                            <form method="post" action="sendemail.php" id="contact-form">
-                                <input type="hidden" name="subject" value="Neue Kontaktanfrage – Ms Clean Website">
-                                <div class="form-group">
-                                    <input type="text" name="username" placeholder="Ihr Name" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" name="email" placeholder="Ihre E-Mail" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" name="phone" placeholder="Telefonnummer" required>
-                                </div>
-                                <div class="form-group">
-                                    <textarea name="message" placeholder="Ihre Nachricht"></textarea>
-                                </div>
-                                <div class="form-group message-btn pt_25">
-                                    <button type="submit" class="theme-btn" name="submit-form">Anfrage senden</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="col-lg-5 col-md-12 col-sm-12 info-column">
-                        <div class="info-content ml_70">
-                            <h2>Unsere Adresse</h2>
-                            <p>Wir sind im Umkreis von 130 km um Mannheim tätig. Kontaktieren Sie uns für ein unverbindliches Festpreisangebot.</p>
-                            <ul class="info-list clearfix">
-                                <li>
-                                    <div class="icon"><img src="assets/images/icons/icon-67.png" alt=""></div>
-                                    <h5>Adresse:</h5>
-                                    <p>Schnurgasse 14, 67227 Frankenthal</p>
-                                </li>
-                                <li>
-                                    <div class="icon"><img src="assets/images/icons/icon-68.png" alt=""></div>
-                                    <h5>Telefon:</h5>
-                                    <p><a href="tel:015780810894">0157 80810894</a></p>
-                                </li>
-                                <li>
-                                    <div class="icon"><img src="assets/images/icons/icon-69.png" alt=""></div>
-                                    <h5>E-Mail:</h5>
-                                    <p><a href="mailto:kontakt@msclean-mannheim.de">kontakt@msclean-mannheim.de</a></p>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                <div class="inner-box">
+                    <h2>Vielen Dank für Ihre Anfrage!</h2>
+                    <p style="font-size: 18px; margin-top: 20px;">Wir haben Ihre Nachricht erhalten und melden uns innerhalb von 24 Stunden bei Ihnen.</p>
+                    <a href="index.html" class="theme-btn btn-one" style="margin-top: 30px;"><span>Zur Startseite</span></a>
                 </div>
             </div>
         </section>
-        <!-- contact-style-three end -->
+        <!-- danke-section end -->
+
 
         <!-- main-footer -->
         <footer class="main-footer">
@@ -352,6 +323,7 @@
                                             <span>Unternehmen</span>
                                         </div>
                                         <ul class="links-list clearfix">
+                                            <li><a href="index.html">Startseite</a></li>
                                             <li><a href="contact.html">Kontakt</a></li>
                                             <li><a href="appointment.html">Angebot anfordern</a></li>
                                             <li><a href="faq.html">FAQ</a></li>
@@ -407,7 +379,6 @@
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/owl.js"></script>
     <script src="assets/js/wow.js"></script>
-    <script src="assets/js/validation.js"></script>
     <script src="assets/js/jquery.fancybox.js"></script>
     <script src="assets/js/appear.js"></script>
     <script src="assets/js/isotope.js"></script>
@@ -415,12 +386,15 @@
     <script src="assets/js/nav-tool.js"></script>
     <script src="assets/js/scrolltop.min.js"></script>
     <script src="assets/js/odometer.js"></script>
-    <script src="assets/js/timePicker.js"></script> 
-    <script src="assets/js/dobpicker_script.js"></script>
-    <script src="assets/js/dobpicker.js"></script>
 
     <!-- main-js -->
     <script src="assets/js/script.js"></script>
+
+    <script>
+      window.addEventListener('load', function() {
+        gtag_report_conversion();
+      });
+    </script>
 
 </body><!-- End of .page_wrapper -->
 </html>

@@ -41,7 +41,7 @@ if ($userName && $senderEmail && $userPhone && $message) {
                        . "Nachricht:\n" . $message;
 
         $mail->send();
-        header('Location: contact.html?message=Erfolgreich');
+        header('Location: danke.html');
     } catch (Exception $e) {
         header('Location: contact.html?message=Failed');
     }

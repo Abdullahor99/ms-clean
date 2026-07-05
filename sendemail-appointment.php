@@ -41,7 +41,7 @@ if ($userName && $senderEmail && $userPhone && $message) {
                        . "Anfrage:\n" . $message;
 
         $mail->send();
-        header('Location: appointment.html?status=Erfolgreich');
+        header('Location: danke.html');
     } catch (Exception $e) {
         header('Location: appointment.html?status=Fehler');
     }
