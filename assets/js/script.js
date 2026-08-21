@@ -163,7 +163,8 @@
         $('.banner-carousel').owlCarousel({
             loop:true,
 			margin:0,
-			nav:true,
+			// Pfeile nur zeigen, wenn es ueberhaupt mehr als einen Slide gibt
+			nav: $('.banner-carousel .slide-item').length > 1,
 			animateOut: 'fadeOut',
     		animateIn: 'fadeIn',
     		active: true,
@@ -474,8 +475,21 @@ if ($(".odometer").length) {
 			// add your functions
 		datepicker ();
 		timepicker ();
+		formTimestamp ();
 		})(jQuery);
 	});
+
+
+/* ==========================================================================
+   Spamschutz: Zeitstempel beim Rendern setzen. Serverseitig wird jede
+   Absendung unter 3 Sekunden verworfen - Bots fuellen Formulare sofort aus.
+   ========================================================================== */
+
+function formTimestamp() {
+	if ($('.form-ts').length) {
+		$('.form-ts').val(Math.floor(Date.now() / 1000));
+	}
+}
 
 
 

@@ -1,7 +1,69 @@
 /* Responsive Css */
 
 @media only screen and (max-width: 1599px){
-  
+
+
+
+
+/* ==================== BLOG RESPONSIVE ==================== */
+
+@media only screen and (max-width: 991px){
+
+  .blog-details-content .news-block-two .image-box figure.image img{
+    height: 300px;
+  }
+
+  .replay-comment{
+    margin-left: 30px;
+  }
+
+  .blog-sidebar{
+    margin-top: 40px;
+  }
+}
+
+@media only screen and (max-width: 767px){
+
+  .news-block-two .lower-content{
+    padding: 20px;
+  }
+
+  .news-block-two .lower-content h3{
+    font-size: 18px;
+    line-height: 26px;
+  }
+
+  .news-block-two .image-box figure.image img{
+    height: 200px;
+  }
+
+  .blog-details-content .news-block-two .image-box figure.image img{
+    height: 220px;
+  }
+
+  .blog-details-content .news-block-two .lower-content h3{
+    font-size: 22px;
+    line-height: 30px;
+  }
+
+  .comment{
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .comment .thumb-box{
+    width: 50px;
+    height: 50px;
+  }
+
+  .replay-comment{
+    margin-left: 20px;
+  }
+
+  .content-one h3{
+    font-size: 22px;
+  }
+}
 }
 
 
@@ -18,7 +80,6 @@
 @media only screen and (max-width: 1200px){
 
   .main-menu,
-  .sticky-header,
   .main-header.style-one .outer-container:before{
     display: none !important;
   }
@@ -167,10 +228,18 @@
 
 @media only screen and (max-width: 991px){
 
-  .banner-carousel .slide-item .bg-layer,
   .banner-section .owl-nav,
   .banner-section .banner-carousel .slide-item:before{
     display: none;
+  }
+
+  .banner-carousel .slide-item .bg-layer{
+    width: 100%;
+    background-position: center center;
+  }
+
+  .banner-carousel .content-box h2{
+    text-shadow: 1px 1px 5px black;
   }
 
   .about-section .image-box{
@@ -353,6 +422,10 @@
     margin: 0px;
   }
 
+  .header-top .text-box{
+    display: none;
+  }
+
   .header-top .top-inner{
     display: block;
     text-align: center;
@@ -413,6 +486,10 @@
   .faq-section,
   .testimonial-section{
     padding: 70px 0px;
+  }
+
+  .about-section .image-box .image-cover img{
+    height: 420px;
   }
 
   .sec-title h2,
@@ -818,10 +895,6 @@
     line-height: 150px;
   }
 
-  .appointment-form .date-box .nice-select{
-    width: 90px;
-  }
-
 }
 
 
@@ -843,3 +916,282 @@
 
 
 
+
+/* --- Trust-Section --- */
+@media only screen and (max-width: 991px){
+  .trust-section{
+    padding: 80px 0 60px;
+  }
+}
+
+@media only screen and (max-width: 767px){
+  .trust-section{
+    padding: 60px 0 40px;
+  }
+  .google-review-box{
+    padding: 30px 20px;
+  }
+  .google-review-box .btn-box .theme-btn{
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* --- Bewertungs-Badges --- */
+@media only screen and (max-width: 991px){
+  .review-bar{
+    padding: 30px 0;
+  }
+}
+
+@media only screen and (max-width: 767px){
+  .review-badges:not(.hero) .review-badge{
+    min-width: 0;
+    width: 100%;
+    max-width: fit-content;
+  }
+  .review-badges.hero .review-badge{
+    min-width: 0;
+  }
+  .review-bar{
+    padding: 25px 0;
+  }
+  .form-review-note{
+    padding-top: 18px;
+    margin-bottom: 20px;
+  }
+}
+
+/* --- Hero-Bewertungen --- */
+@media only screen and (max-width: 599px){
+  .banner-carousel .content-box .hero-review-box{
+    margin-top: 20px;
+  }
+  .review-badges.hero .review-badge{
+    width: 100%;
+  }
+}
+
+/* --- Hero-CTAs --- */
+@media only screen and (max-width: 599px){
+  .hero-btn-box{
+    gap: 12px;
+  }
+  .hero-btn-box .theme-btn{
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* --- FAQ-CTA-Box --- */
+@media only screen and (max-width: 767px){
+  .faq-cta-box{
+    padding: 32px 20px;
+  }
+  .faq-cta-box .btn-box .theme-btn{
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* --- Banner-H1 --- */
+/* Die Responsive-Regeln des Templates decken nur h2 ab. Die H1 im ersten
+   Slide behielt dadurch auf jeder Bildschirmgroesse 70px/84px und schob die
+   CTA-Buttons unter die Falz. */
+@media only screen and (max-width: 991px){
+  .banner-carousel .content-box h1{
+    font-size: 50px;
+    line-height: 60px;
+    text-shadow: 1px 1px 5px black;
+  }
+}
+
+@media only screen and (max-width: 767px){
+  .banner-carousel .content-box h1{
+    font-size: 40px;
+    line-height: 50px;
+    margin-bottom: 18px;
+  }
+}
+
+@media only screen and (max-width: 599px){
+  .banner-carousel .content-box h1{
+    font-size: 32px;
+    line-height: 42px;
+  }
+  .banner-carousel .content-box p{
+    font-size: 15px;
+    line-height: 25px;
+  }
+}
+
+/* --- 404-Seite --- */
+@media only screen and (max-width: 767px){
+  .error-section .inner-box .btn-box .theme-btn{
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* --- Paket-Karten (.bid-card) --- */
+/* Die Spaltenaufteilung 3 -> 2 -> 1 uebernimmt Bootstrap ueber
+   col-lg-4 col-md-6 col-sm-12. Hier nur Abstaende und Schriftgroessen. */
+@media only screen and (max-width: 991px){
+  .bid-section{
+    padding: 80px 0 50px;
+  }
+  .bid-row-title h3{
+    font-size: 22px;
+    line-height: 30px;
+  }
+}
+
+@media only screen and (max-width: 767px){
+  .bid-section{
+    padding: 60px 0 30px;
+  }
+  .bid-card-head{
+    padding: 26px 22px 22px;
+  }
+  .bid-card-head h3{
+    font-size: 22px;
+    line-height: 30px;
+  }
+  .bid-card-body{
+    padding: 24px 22px 6px;
+  }
+  .bid-card-foot{
+    padding: 18px 22px 26px;
+  }
+  .bid-selected-note{
+    padding: 14px 18px;
+    font-size: 15px;
+    line-height: 24px;
+  }
+}
+
+@media only screen and (max-width: 420px){
+  /* Badge braucht auf sehr schmalen Displays eine eigene Zeile,
+     sonst kollidiert es mit dem Paketnamen. */
+  .bid-card-badge{
+    position: static;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+  .bid-card-head h3{
+    padding-right: 0;
+  }
+}
+
+/* --- Leistungs-Karten (.service-card) --- */
+/* Spaltenaufteilung 3 -> 2 -> 1 macht Bootstrap ueber
+   col-lg-4 col-md-6 col-sm-12. Hier nur Abstaende und Schriftgroessen.
+   Kritisch ist 992-1199px: die col-lg-4-Spalte ist dort nur rund 320px
+   breit — dieselbe Stelle, an der die Paket-Buttons schon einmal
+   zweizeilig umgebrochen sind. Deshalb dort engeres Padding. */
+@media only screen and (max-width: 1199px){
+  .service-card{
+    padding: 32px 22px 26px;
+  }
+  .service-card h3{
+    font-size: 20px;
+    line-height: 28px;
+  }
+}
+
+@media only screen and (max-width: 991px){
+  .service-cards-section{
+    padding: 80px 0 50px;
+  }
+  .service-card{
+    padding: 32px 26px 28px;
+  }
+}
+
+@media only screen and (max-width: 767px){
+  .service-cards-section{
+    padding: 60px 0 30px;
+  }
+  .service-card{
+    padding: 28px 22px 24px;
+  }
+  .service-card h3{
+    font-size: 20px;
+    line-height: 28px;
+  }
+  .service-card .icon-box{
+    width: 56px;
+    height: 56px;
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+}
+
+/* --- Zahlenleiste (.stats-section) --- */
+/* Vier Kacheln: col-lg-3 col-6 — auf dem Handy bewusst zweispaltig
+   statt gestapelt, vier volle Bloecke untereinander waeren zu lang. */
+@media only screen and (max-width: 991px){
+  .stats-value{
+    font-size: 36px;
+    line-height: 44px;
+  }
+}
+
+@media only screen and (max-width: 767px){
+  .stats-block-one{
+    padding: 24px 14px;
+    margin-bottom: 20px;
+  }
+  .stats-value{
+    font-size: 30px;
+    line-height: 38px;
+  }
+  .stats-label{
+    font-size: 14px;
+    line-height: 22px;
+  }
+  .stats-block-one .stars{
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+}
+
+
+/* ===== Aktions-Sidebar: ab Tablet unten mittig ===== */
+
+@media only screen and (max-width: 991px){
+
+  .action-sidebar{
+    top: auto;
+    right: auto;
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%);
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .action-sidebar-btn{
+    border-radius: 50%;
+  }
+
+  .action-sidebar-btn:hover,
+  .action-sidebar-btn:focus-visible{
+    width: 56px;
+    background: var(--theme-color);
+  }
+
+  .action-sidebar-btn .label{
+    display: none;
+  }
+
+}
+
+@media (max-width: 767px){
+  .banner-carousel .bg-layer{
+    &::after{
+      background: rgba(0,0,0,0.88);
+    }
+  }
+}

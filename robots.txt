@@ -1,4 +1,10 @@
 User-agent: *
 Allow: /
 
+# Ungenutzte Template-Varianten und Template-Doku - nicht indexieren
+Disallow: /archiv/
+Disallow: /Documentation/
+Disallow: /knowladge/
+Disallow: /phpmailer/
+
 Sitemap: https://msclean-mannheim.de/sitemap.xml

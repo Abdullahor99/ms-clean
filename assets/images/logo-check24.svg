@@ -1,0 +1,17 @@
+<!--
+  Nachempfundene CHECK24-Wortmarke: weisse kursive Schrift auf blauem Grund
+  mit dem Pfeil-Schwung unter der "24". KEIN offizielles Asset.
+  Sobald das Original oder das CHECK24-Partnersiegel vorliegt, einfach diese
+  Datei ersetzen (gleicher Dateiname, Seitenverhaeltnis ~2,75:1).
+  Am HTML muss dafuer nichts geaendert werden.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 80" width="220" height="80" role="img" aria-label="CHECK24">
+  <rect width="220" height="80" rx="3" fill="#5B9BD5"/>
+  <text x="13" y="44"
+        font-family="'Arial Black', 'Arial Bold', Arial, Helvetica, sans-serif"
+        font-size="40" font-weight="900" font-style="italic" letter-spacing="-1"
+        fill="#fff" textLength="192" lengthAdjust="spacingAndGlyphs">CHECK24</text>
+  <path d="M145 55 C 155 69, 188 69, 202 50"
+        fill="none" stroke="#fff" stroke-width="5.5" stroke-linecap="round"/>
+  <path d="M207.9 41.9 L207.2 53.9 L196.8 46.1 Z" fill="#fff"/>
+</svg>

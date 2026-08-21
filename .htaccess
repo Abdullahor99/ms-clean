@@ -3,3 +3,13 @@
     SetEnv no-brotli 1
     SetEnv no-gzip 1
 </FilesMatch>
+
+# 301 redirects for renamed pages
+Redirect 301 /contact.html /kontakt.html
+Redirect 301 /appointment.html /angebot-anfordern.html
+
+# umzug.html ist voruebergehend deaktiviert und wird ueberarbeitet.
+# Bewusst 302 und nicht 301: ein 301 wird von Browsern hart gecacht und
+# von Google dauerhaft auf / konsolidiert - die URL waere danach verbrannt.
+# Beim Wiedereinschalten: diese Zeile entfernen.
+Redirect 302 /umzug.html /
