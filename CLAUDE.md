@@ -138,6 +138,230 @@ Update this file after every major change.
 
 ## Changelog
 
+### 2026-09-02 — Lighthouse-Audit umgesetzt: CLS, Font-Display, Render-Blocking-CSS, Bildgrößen, Kontrast
+
+Sechs freigegebene Punkte aus einem echten Lighthouse-Report
+(`Lighthouse/msclean-mannheim.de-20260902T133524.json`, Live-Domain) umgesetzt, der
+Reihe nach, auf allen 12 aktiven Seiten. `archiv/` unangetastet.
+
+**1. Bild-Dimensionen.** 205 `<img>`-Tags (nicht nur die ~20 im Audit-Beispiel — *alle*
+ungrößten `<img>` der 12 Seiten) haben jetzt `width`/`height` aus den echten
+Pixelmaßen (`sips`/`file`, bei den SVG-Logos das `viewBox`/`width`/`height` im
+SVG-Wurzelelement: 4000×933). Betrifft beide Logo-Varianten, alle Icon-PNGs
+(`icon-1` bis `icon-69`, je nach Seite), alle `ai-images`/`real-images`-Content-Fotos.
+Bestehendes CSS-Sizing (`width:100%` etc.) bleibt unverändert die visuelle Wahrheit —
+die Attribute reservieren nur das Seitenverhältnis vor dem Laden.
+
+**2. Font-Display.** `assets/css/font-awesome-all.css` hatte **zehn** `@font-face`-Blöcke
+(Font Awesome 6 Free/Brands, die Legacy-Aliase Font Awesome 5 Free/Brands, vier
+`FontAwesome`-Fallback-Blöcke inkl. `fa-v4compatibility`) — alle mit
+`font-display: block`, nicht nur die im Report genannten `fa-solid-900`/`fa-brands-400`.
+Alle zehn auf `swap` gestellt, dazu der elfte Block in `assets/css/flaticon.css`
+(`icomoon.ttf`, dort ist die Regel tatsächlich zu Hause — nicht wie im Report vermutet
+in `elpath.css`, das keine `@font-face`-Regel enthält). Keine spätere Regel
+überschreibt das mehr.
+
+**3. Render-Blocking CSS.** 9 der 13 Stylesheets laufen jetzt async
+(`media="print" onload="this.media='all'"` + `<noscript>`-Fallback):
+`bootstrap.css`, `font-awesome-all.css`, `owl.css`, `animate.css`, `nice-select.css`,
+`odometer.css`, `jquery.fancybox.min.css`, `elpath.css`, `flaticon.css`. Synchron
+bleiben `fonts.css`, `color.css`, `style.css`, `responsive.css` (und `timePicker.css`
+auf den 3 Seiten, die es laden) — genau wie im Plan vorgegeben, Ladereihenfolge sonst
+unverändert. **FOUC-Check bestanden:** `index.html`, `umzug.html`, `faq.html`,
+`angebot-anfordern.html` per `python3 -m http.server` und Chrome-DevTools-Protokoll
+geprüft (Vollbild + gewartetes Nachladen) — keine sichtbare ungestylte Phase, keine
+neuen Konsolenfehler.
+
+**4. Bilder optimiert.**
+`assets/images/shape/shape-1.png` (63 KB, kein Alpha) → `shape-1.webp` (5,1 KB, `-q 80`).
+`assets/images/shape/shape-3.png` (86 KB, **mit** Alpha) → `shape-3.webp` (40 KB,
+`-q 80 -alpha_q 100`, Transparenz erhalten). Beide `.png` bleiben zur Sicherheit liegen,
+7 `background-image`-Referenzen in 5 Dateien (`index.html`, `blog.html`,
+`blog-details.html`, `datenschutz.html`, `impressum.html` für shape-1;
+`index.html`, `umzug.html` für shape-3) auf `.webp` umgestellt. Visuell geprüft
+(Chrome-Zoom-Screenshot): Streifenmuster im Header und das helle Kartenmuster im
+Ablauf-Bereich sehen unverändert aus.
+`assets/ai-images/kuehlschrank-in-umzugswagen-verladen.webp` war 741×1600px bei
+419×905px Darstellungsgröße (`.about-section .image-box .image-cover img`,
+`height:600px`) — mit `cwebp -resize 0 1200 -q 78` auf 556×1200px verkleinert
+(98 KB → 57 KB), `width`/`height` auf `index.html` nachgezogen. Sichtprüfung: Bild
+füllt seine Spalte weiterhin scharf und ohne Verzerrung (`object-fit: cover`).
+
+**5. Farbkontrast** (`--theme-color` #d29251 schaffte nur 2.3–2.6:1 statt 4.5:1/3:1).
+Neue Variable `--theme-color-text: #8f6236` (≈5.3:1 auf Weiß) in `style.css`
+`:root`, eingesetzt bei `.sec-title .sub-title` (color.css, aus der
+Sammelregel herausgelöst), dem Akzent-`span` in `.sec-title h2` (drei Fundstellen:
+`.trust-section`, `.bid-section`, `.service-cards-section`), `.bid-card-price` und
+`.bid-section-note a`. `.theme-btn`/`.bid-card-btn`-Text (weiß auf Gold) auf
+`#1d2a28` (Bestandsfarbe) gedreht — **mit Hover-Gegenregel**, sonst wäre der Text in
+der Zwei-Flächen-Hover-Animation (dunkler Hintergrund) unlesbar geworden:
+`.theme-btn:hover{ color:#fff !important; }`. Die Variante
+`.theme-btn-outline-light` (weiß auf transparent im Hero) hat dafür jetzt selbst
+`!important`, sonst hätte die neue Basisfarbe sie überstimmt. `<del>`-Grau in den
+Paketkarten `#a3a3a3` → `#767676`.
+
+**Zwei Dunkelgrund-Ausnahmen bewusst zurückgehalten**, sonst wäre Text auf Text nicht
+mehr lesbar geworden: `.sec-title.light .sub-title` (Galerie-Überschrift auf
+`.project-section`, `#24292f`) und `.bid-card-price` in `.bid-card-premium`
+(dunkler Kartenkopf, `var(--secondary-color)`) behalten das helle `--theme-color` —
+dort erreicht es 5.2–5.6:1 und wäre mit der dunkleren Variante auf **2.6–2.8:1**
+gefallen. Beide Fälle betreffen nur `index.html`/`umzug.html`, kein Textinhalt
+geändert.
+
+**Beim Verifizieren mit echtem `npx lighthouse` eine zusätzliche, im Report nicht
+genannte Fundstelle entdeckt und im selben Muster mitgezogen** (identischer Fehler,
+identische Ursache, keine neue Farbe erfunden): `.stats-value` (die vier Zahlenkacheln
+„800+", „5,0", „4,8", „5 Jahre" auf `index.html`, 44px fett auf Weiß, 2.63:1 statt
+nötigen 3:1) → `--theme-color-text`. `.bid-card-badge` („BELIEBT"/„B2B", weißer Text
+auf Gold, exakt dasselbe Muster wie `.theme-btn`) → `#1d2a28`, ohne Hover-Sonderfall,
+da die Kachel keine Hover-Animation hat.
+
+**Weiterhin offen, bewusst nicht angefasst:** 7 Kontrastfehler bleiben, alle **ohne**
+Bezug zu `--theme-color` (andere Variablen, nicht Teil des freigegebenen Auftrags):
+FAQ-Akkordeon-Nummern „01./02./03." (`#747474` auf `#fbf8f4`, 4.41 statt 4.5),
+Footer-Kontaktliste „Anrufen"/„Nachricht senden" (`#939393` auf `#272e35`, 4.47) und
+Footer-Copyright-Text samt Link (`#909398` auf `#272e35`, 4.45) — alle drei nur
+hauchdünn unter der Schwelle. Eigene Freigabe nötig, da andere Farbwerte betroffen
+sind. Ebenfalls unverändert (außerhalb des Auftrags): `label-content-name-mismatch`
+und `image-size-responsive` (Accessibility/Best-Practices, unabhängige Befunde).
+
+**Verifikation:**
+- **div-Balance** aller 12 Seiten unverändert ausgeglichen (`index.html` 266/266,
+  `angebot-anfordern.html` 188/188, `umzug.html` 185/185, Rest siehe Einzelwerte —
+  keine der Änderungen dieses Durchgangs betrifft `<div>`-Struktur).
+- **Visuell** (Chrome DevTools Protocol, `python3 -m http.server`, 1440px und 390px):
+  kein FOUC, Logo/Icons ohne Sprung, Musterbilder korrekt, Button-Text auf Gold in
+  Ruhe **und** Hover lesbar geprüft — über `getComputedStyle` verifiziert
+  (`color: rgb(29,42,40)` Ruhe, `rgb(255,255,255)` Hover), nicht nur per Screenshot:
+  der Test-Chrome hatte eine Erweiterung mit Warmfilter, die Screenshots von Weiß auf
+  Dunkel gold-stichig einfärbte, ohne dass der tatsächliche CSS-Wert betroffen war —
+  nur `getComputedStyle` ist dort verlässlich.
+- **`npx lighthouse`** lief mehrfach. **Wichtige Korrektur bei der Nachprüfung:** Der
+  erste Verifikations-Durchgang benutzte Lighthouses Default-Profil (Mobile, 4×
+  CPU-Drosselung, langsames Netz) — das ist **nicht** dasselbe Profil wie der
+  Live-Baseline-Report (Desktop, ungedrosselt), und lieferte deshalb eine CLS-Zahl
+  (0.032), die dem Original nicht gegenübergestellt werden darf. Beim erneuten Lauf
+  mit `--preset=desktop` (identisches Profil wie die Baseline) zeigte sich zusätzlich
+  ein echter Regressions-Fund: **`owl.css` (das Hero-Karussell-Stylesheet) war unter
+  Punkt 3 versehentlich mit in die asynchrone Ladung gerutscht.** Auf einer schnellen
+  Verbindung rendert der Hero-Slide dadurch kurz ungestylt und springt dann in
+  Position, sobald `owl.css` nachlädt — ein neuer, größerer Shift (Score 0.848) als
+  das Problem, das behoben werden sollte. **Korrigiert:** `owl.css` läuft auf allen
+  12 Seiten wieder synchron, die anderen 8 asynchronen Dateien blieben unangetastet.
+
+  Danach, mit `--preset=desktop` gegen den Live-Baseline-Report verglichen:
+
+  | Audit | vorher (Live, Desktop) | nachher (lokal, Desktop, gleiches Profil) |
+  |---|---|---|
+  | `largest-contentful-paint` | 2.6 s (score 0.43) | **1.1–1.6 s (score 0.75–0.91)** |
+  | `first-contentful-paint` | 1.4 s | **0.6–0.7 s** |
+  | `speed-index` | 2.5 s | **1.3–1.4 s** |
+  | `total-blocking-time` | 150 ms (score 0.89) | **0 ms (score 1)** |
+  | `unsized-images` | score 0.5 | **score 1** |
+  | `font-display-insight` | score 0, ~700 ms verschenkt | **score 1** |
+  | `color-contrast` | 42 Fundstellen | **7** (alle außerhalb des Auftrags, s.o.) |
+  | best-practices (Kategorie) | 0.77 | **1.00** |
+  | performance (Kategorie) | 0.50 | **0.69–0.72** |
+  | `cumulative-layout-shift` | 0.666 (score 0.08) | **0.827–0.854 (score 0.04), s.u.** |
+
+  **CLS ist NICHT gelöst — hartnäckiger Restbefund.** Mit `owl.css` korrigiert bleibt
+  ein einzelner dominanter Shift (Score ≈0.82) übrig, den Lighthouse
+  `section.working-section > div.pattern-layer` zuschreibt (dieselbe Stelle, die schon
+  im Original-Report mit Score 0.658 die Hauptursache war — **vorbestehend, nicht
+  durch die heutigen Änderungen verursacht**). Diagnose per Test-Deployment
+  (`.pattern-layer{display:none}`, danach `npx lighthouse` erneut, danach entfernt):
+  derselbe Shift-Score bleibt exakt gleich, jetzt `.working-section` selbst
+  zugeschrieben — die dekorative Musterfläche ist also nur das größte Element, das
+  mitbewegt wird, nicht die Ursache. Da `.working-section` direkt auf den Hero folgt
+  und Font-Metriken beim Web-Font-Wechsel (Fallback → Jost/Fira Sans/Barlow, alle
+  bereits korrekt auf `font-display: swap`, s. `fonts.css`) plausibel die Hero-Höhe
+  verändern und damit alles darunter verschieben, ist das die wahrscheinlichste
+  Ursache — **manuell im echten Chrome dreimal nicht reproduzierbar** (auch mit
+  kaltem Cache, neuem Port, angepasster Fenstergröße blieb `performance.getEntriesByType('layout-shift')`
+  leer), tritt aber in jedem `npx lighthouse`-Lauf reproduzierbar auf und war schon im
+  allerersten Live-Report vorhanden. **Offener Punkt für einen gezielten Folge-Task:**
+  vermutlich Font-Metrik-Abgleich (`size-adjust`/`ascent-override` an einem
+  Fallback-Font-Face für die Hero-Überschrift) oder eine reservierte Mindesthöhe für
+  `.banner-carousel .slide-item` — beides nicht blind umgesetzt, weil beide Ansätze
+  ohne belastbare Pixel-Messung eher schaden als nützen können.
+
+Geänderte Dateien: alle 12 aktiven HTML-Seiten (nur `<link>`/`<img>`-Attribute,
+kein Text geändert), `assets/css/style.css`, `assets/css/color.css`,
+`assets/css/font-awesome-all.css`, `assets/css/flaticon.css`,
+`assets/ai-images/kuehlschrank-in-umzugswagen-verladen.webp` (ersetzt), neu:
+`assets/images/shape/shape-1.webp`, `assets/images/shape/shape-3.webp`. Alte
+`shape-1.png`/`shape-3.png` liegen noch ungenutzt auf der Platte (Aufräumen als
+Kleinigkeit offen). `.htaccess` und die zu diesem Zeitpunkt bereits offenen, nicht
+committeten Änderungen an dieser Datei sowie der Rest dieser `CLAUDE.md` blieben
+unangetastet.
+
+**PM-Gegenprüfung (unabhängig vom umsetzenden Agent):** div-Balance aller 12 Seiten
+selbst nachgezählt (unverändert ausgeglichen), Bild-Dimensionen und SVG-`viewBox`
+stichprobenartig verifiziert, CSS-Diff Zeile für Zeile gelesen (u.a. die bewusst
+zurückgehaltenen Dunkelgrund-Ausnahmen bei `.sec-title.light` und
+`.bid-card-premium .bid-card-price` nachvollzogen), und der komplette
+Lighthouse-Vergleich oben mit `--preset=desktop` selbst neu gefahren statt dem
+Agenten-Bericht zu vertrauen — dabei den `owl.css`-Regressions-Fund und den weiterhin
+offenen CLS-Punkt aufgedeckt, die im ursprünglichen Agenten-Bericht fehlten.
+
+### 2026-08-21 — Conversion-Tracking geprüft, `www` leitet jetzt weiter
+
+Google Ads meldete bei der Conversion `7726283025` („Angebot anfordern (msclean-mannheim.de/)",
+erstellt 19.8.2026) **„Conversion has never received data"**. Auf der Website ist nichts
+kaputt — gegen die Live-Domain geprüft:
+
+| Prüfung | Ergebnis |
+|---|---|
+| Google-Tag `AW-18256090192` live auf `danke.html` | vorhanden (`danke.html:6`), identisch auf allen 12 aktiven Seiten |
+| `https://msclean-mannheim.de/danke.html` | HTTP 200, kein Redirect, keine URL-Umschreibung |
+| `.htaccess` fasst `/danke.html` an | nein |
+| Consent-Banner blockiert gtag | keins vorhanden, das Tag feuert bedingungslos |
+| Formulare landen auf `danke.html` | `sendemail.php` 3× · `sendemail-appointment.php` 4× |
+
+**Der Hinweis ist ohne laufende Kampagne der Normalzustand.** Google Ads zählt eine
+Conversion ausschließlich nach einer Anzeigeninteraktion (Klick 90 Tage, View-through
+1 Tag). Solange keine Anzeige Klicks liefert, kann die Conversion definitionsgemäß nie
+Daten bekommen, egal wie korrekt das Tag feuert. Ein Aufruf von `danke.html` ohne
+vorherigen Anzeigenklick taucht dort **nie** auf — das ist kein tauglicher Test.
+
+**Diese Conversion hat kein Conversion-Label, und das ist kein Fehler.** Sie ist
+automatisch aus dem Google-Tag entstanden (Quelle „Website", Ereignis „Seitenaufbau:
+msclean-mannheim.de/danke.html", Datenquelle „MS Clean"). URL-regel-basierte Conversions
+werden vom Tag selbst ausgelöst; Google vergibt für sie kein Label und blendet den
+Abschnitt „Tag einrichten" aus. Ein Label gibt es nur für Conversion-Aktionen, die man
+**manuell mit Code** anlegt. Wer also ein `gtag('event','conversion',{send_to:…})`-Snippet
+einbauen will, muss vorher eine **zweite, manuell erstellte** Conversion-Aktion anlegen
+und die automatische deaktivieren, sonst wird doppelt gezählt. Bewusst nicht gemacht —
+`danke.html` bleibt unangetastet.
+
+**Einzige Code-Änderung: `www` → non-www als 301 in `.htaccess`.**
+`https://www.msclean-mannheim.de/` lieferte die Seiten mit **HTTP 200** aus, statt auf die
+kanonische Domain weiterzuleiten. Eine Anzeigen-Ziel-URL mit `www` wäre damit an einer
+exakt gesetzten Conversion-URL-Regel vorbeigelaufen; nebenbei sah Google die Website
+doppelt. Die Datei benutzt dafür **erstmals mod_rewrite** — `RewriteEngine On` gab es hier
+vorher nicht. Der Block steht ganz oben, vor den `Redirect`-Direktiven.
+
+**Beim Kampagnenstart:** Ziel-URLs ohne `www` eintragen. Der 301 fängt den Fall ab, aber
+jede Weiterleitung kostet Ladezeit auf einem bezahlten Klick.
+
+**Lokal mit echtem Apache getestet** (`/usr/sbin/httpd` mit Minimal-Config auf Port 8099,
+`AllowOverride All`, DocumentRoot auf das Projekt, Host-Header gesetzt): `www` → 301 auf
+`https://msclean-mannheim.de/danke.html` · non-www → 200 ohne Schleife · die drei
+bestehenden Weiterleitungen unverändert (301/301/302) · Start-, Kontakt- und
+Angebotsseite je 200 · kein Eintrag im Apache-Error-Log. Nebenbefund: `www/contact.html`
+läuft über **zwei** Hops (erst non-www, dann `kontakt.html`) — für eine Alt-URL in Ordnung.
+
+**Nach dem Deploy trotzdem gegen den echten Server nachfahren:**
+
+```bash
+curl -sSI -o /dev/null -w "%{http_code} -> %{redirect_url}\n" https://www.msclean-mannheim.de/danke.html   # 301
+curl -sSIL -o /dev/null -w "%{http_code} -> %{url_effective}\n" https://msclean-mannheim.de/danke.html     # 200, keine Schleife
+for u in contact.html appointment.html umzug.html; do curl -sSI -o /dev/null -w "$u: %{http_code} -> %{redirect_url}\n" "https://msclean-mannheim.de/$u"; done
+```
+
+Der dritte Befehl ist der eigentliche Risikotest: `RewriteEngine On` in einer Datei, die
+bisher nur `Redirect` kannte, darf die drei bestehenden Weiterleitungen nicht stören.
+
 ### 2026-08-19 — `umzug.html` vorübergehend deaktiviert
 
 Die Seite wird überarbeitet und ist bis dahin nicht mehr erreichbar. **Umbenannt wurde

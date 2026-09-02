@@ -1,3 +1,10 @@
+# Kanonische Domain: www -> non-www. Sonst laeuft eine Anzeigen-Ziel-URL mit www
+# an der Conversion-URL-Regel in Google Ads vorbei, und Google sieht die Website
+# doppelt. Muss vor allen anderen Regeln stehen.
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+
 # Disable Brotli/gzip compression for sitemap and robots so Google can read them
 <FilesMatch "^(sitemap\.xml|robots\.txt)$">
     SetEnv no-brotli 1

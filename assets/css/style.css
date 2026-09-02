@@ -70,6 +70,7 @@
 
 :root{
   --theme-color: #d29251;
+  --theme-color-text: #8f6236;
   --secondary-color: #272e35;
   --text-color: #444444;
   --title-color: #010101;
@@ -385,7 +386,10 @@ img {
   line-height: 26px;
   font-weight: 700;
   font-family: var(--jost);
-  color: #fff !important;
+  /* Kontrast-Fix (Lighthouse 2026-09-02): weiss auf Gold schaffte nur ~2.3:1.
+     Ruhezustand jetzt dunkel auf Gold; die Hover-Animation legt zwei dunkle
+     Flaechen darueber, deshalb schaltet .theme-btn:hover den Text zurueck auf weiss. */
+  color: #1d2a28 !important;
   background: var(--theme-color);
   text-align: center;
   padding: 16px 35px 14px 35px;
@@ -393,6 +397,10 @@ img {
   letter-spacing: 0.7px;
   text-transform: uppercase;
   transition: all 500ms ease;
+}
+
+.theme-btn:hover{
+  color: #fff !important;
 }
 
 .theme-btn:before,
@@ -604,6 +612,14 @@ img {
 
 .sec-title.light h2{
   color: #fff;
+}
+
+/* .sub-title sitzt hier auf dunklem Grund (.project-section, #24292f) -
+   dort erreicht das helle --theme-color bereits 5.5:1 und bleibt bewusst
+   unveraendert; das dunklere --theme-color-text waere auf Dunkel selbst
+   zu kontrastarm (Kontrast-Fix 2026-09-02 gilt nur fuer helle Hintergruende). */
+.sec-title.light .sub-title{
+  color: var(--theme-color);
 }
 
 .sec-title p{
@@ -6637,7 +6653,7 @@ html.lenis {
 }
 
 .trust-section .sec-title h2 span {
-    color: var(--theme-color);
+    color: var(--theme-color-text);
 }
 
 .trust-block-one {
@@ -7008,7 +7024,11 @@ html.lenis {
 
 .theme-btn.theme-btn-outline-light {
     background: transparent;
-    color: #fff;
+    /* !important, sonst gewinnt die neue dunkle Textfarbe von .theme-btn
+       (gleiche Wichtigkeit, aber .theme-btn ist weniger spezifisch --
+       ohne !important hier wuerde das nichts nuetzen, da Wichtigkeit vor
+       Spezifitaet geht). */
+    color: #fff !important;
     box-shadow: inset 0 0 0 2px #fff;
 }
 
@@ -7109,7 +7129,7 @@ html.lenis {
 }
 
 .bid-section .sec-title h2 span {
-    color: var(--theme-color);
+    color: var(--theme-color-text);
 }
 
 /* Zwischenueberschrift vor der zweiten Reihe */
@@ -7194,7 +7214,7 @@ html.lenis {
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: var(--theme-color);
+    color: var(--theme-color-text);
 }
 
 /* --- Badge --- */
@@ -7210,7 +7230,10 @@ html.lenis {
     letter-spacing: 0.8px;
     text-transform: uppercase;
     white-space: nowrap;
-    color: #fff;
+    /* Kontrast-Fix (Lighthouse 2026-09-02): derselbe Fall wie .theme-btn -
+       weiss auf Gold schaffte nur 2.63:1. Kein Hover auf dieser Kachel,
+       daher reicht die dunkle Farbe ohne Zusatzregel. */
+    color: #1d2a28;
     background: var(--theme-color);
 }
 
@@ -7255,7 +7278,8 @@ html.lenis {
 }
 
 .bid-card-list.is-out li {
-    color: #a3a3a3;
+    /* Kontrast-Fix (Lighthouse 2026-09-02): #a3a3a3 auf Weiss unterschritt 4.5:1 */
+    color: #767676;
 }
 
 .bid-card-list.is-out li:before {
@@ -7310,6 +7334,11 @@ html.lenis {
    sonst steht der Titel zwischen 992 und 1199px unnoetig eng am Umbruchrand. */
 .bid-card-premium .bid-card-head h3     { padding-right: 0; }
 .bid-card-premium .bid-card-sub         { color: rgba(255, 255, 255, 0.72); }
+/* .bid-card-price sitzt hier auf dem dunklen Kopf (var(--secondary-color)) -
+   dort erreicht das helle --theme-color 5.2:1 und bleibt bewusst
+   unveraendert; das dunklere --theme-color-text waere auf Dunkel selbst
+   zu kontrastarm (Kontrast-Fix 2026-09-02 gilt nur fuer helle Hintergruende). */
+.bid-card-premium .bid-card-price       { color: var(--theme-color); }
 
 /* --- Abschlusszeile unter den Karten --- */
 .bid-section-note {
@@ -7322,7 +7351,7 @@ html.lenis {
 
 .bid-section-note a {
     font-weight: 600;
-    color: var(--theme-color);
+    color: var(--theme-color-text);
     text-decoration: underline;
 }
 
@@ -7374,7 +7403,7 @@ html.lenis {
 }
 
 .service-cards-section .sec-title h2 span {
-    color: var(--theme-color);
+    color: var(--theme-color-text);
 }
 
 .service-card {
@@ -7500,7 +7529,10 @@ a.stats-block-one {
     font-size: 44px;
     line-height: 52px;
     font-weight: 700;
-    color: var(--theme-color);
+    /* Kontrast-Fix (Lighthouse 2026-09-02): grosse Zahl auf Weiss, gleicher
+       Fall wie der Akzent-Span in .sec-title h2 - 2.63 verfehlte auch das
+       3:1-Minimum fuer grosse Schrift. */
+    color: var(--theme-color-text);
 }
 
 .stats-label {

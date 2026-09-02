@@ -7,7 +7,6 @@
 .main-menu .navigation > li > .megamenu li > a:hover,
 .main-menu .navigation > li > ul > li > ul > li > a:hover,
 .scroll-to-top .scroll-bar-text,
-.sec-title .sub-title,
 .main-footer .logo-widget .info-list li a:hover,
 .main-footer .links-list li a:hover,
 .main-footer .copyright p a:hover,
@@ -34,6 +33,13 @@
 
 {
   color: var(--theme-color);
+}
+
+/* Kontrast-Fix (Lighthouse 2026-09-02): Text auf hellem Grund braucht 4.5:1,
+   --theme-color (#d29251) schafft nur ~2.3:1. Nur Text-Stellen, keine
+   Flaechen/Icons/Rahmen/Hover. */
+.sec-title .sub-title{
+  color: var(--theme-color-text);
 }
 
 
