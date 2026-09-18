@@ -515,3 +515,42 @@ function formTimestamp() {
 	
 
 })(window.jQuery);
+
+/* ==========================================================================
+   Google Ads: Conversion bei Klick auf WhatsApp-Links
+   ========================================================================== */
+
+function gtag_report_conversion(url) {
+	var done = false;
+	var callback = function () {
+		if (done) { return; }
+		done = true;
+		if (typeof(url) != 'undefined') {
+			window.location = url;
+		}
+	};
+	gtag('event', 'conversion', {
+		'send_to': 'AW-18256090192/wA85CO631fscENCol4FE',
+		'event_callback': callback
+	});
+	// Fallback, falls gtag.js blockiert ist und der Callback nie kommt
+	setTimeout(callback, 1000);
+	return false;
+}
+
+document.addEventListener('click', function (e) {
+	if (typeof gtag !== 'function' || !e.target.closest) { return; }
+	var link = e.target.closest('a[href*="wa.me"], a[href*="api.whatsapp.com"]');
+	if (!link) { return; }
+
+	// Neuer Tab: Standardverhalten beibehalten, Conversion nur senden
+	if (link.target === '_blank' || e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) {
+		gtag('event', 'conversion', {
+			'send_to': 'AW-18256090192/wA85CO631fscENCol4FE'
+		});
+		return;
+	}
+
+	e.preventDefault();
+	gtag_report_conversion(link.href);
+});
