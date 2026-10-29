@@ -7,6 +7,20 @@
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  // Consent Mode v2: bis zur Wahl im Banner alles abgelehnt (assets/js/consent.js)
+  gtag('consent', 'default', {
+    ad_storage: 'denied', ad_user_data: 'denied',
+    ad_personalization: 'denied', analytics_storage: 'denied',
+    wait_for_update: 500
+  });
+  gtag('set', 'ads_data_redaction', true);
+  gtag('set', 'url_passthrough', true);
+  try {
+    var c = JSON.parse(localStorage.getItem('msc_consent') || 'null');
+    if (c && c.v === 1 && c.ads === 'granted' && Date.now() - c.ts < 31536e6) {
+      gtag('consent', 'update', {ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted', analytics_storage: 'granted'});
+    }
+  } catch (e) {}
   gtag('js', new Date());
 
   gtag('config', 'AW-18256090192');
@@ -269,7 +283,8 @@
                                 <div class="collapse navbar-collapse show clearfix" id="navbarSupportedContent">
                                     <ul class="navigation clearfix">
                                         <li><a href="index.html">Startseite</a></li>
-                                        <!-- <li><a href="umzug.html">Umzug</a></li> -->
+                                        <li><a href="umzug.html">Umzug</a></li>
+                                        <li><a href="entruempelung.html">Entrümpelung</a></li>
                                         <li><a href="einsatzgebiet.html">Einsatzgebiet</a></li>
                                         <!-- <li><a href="blog.html">Blog</a></li> -->
                                         <li><a href="faq.html">FAQ</a></li>
@@ -431,7 +446,8 @@
                                             <span>Leistungen</span>
                                         </div>
                                         <ul class="links-list clearfix">
-                                            <!-- <li><a href="umzug.html">Umzug</a></li> -->
+                                            <li><a href="umzug.html">Umzug</a></li>
+                                            <li><a href="entruempelung.html">Entrümpelung</a></li>
                                             <li><a href="angebot-anfordern.html">Angebot anfordern</a></li>
                                         </ul>
                                     </div>
@@ -444,6 +460,7 @@
                                         <ul class="links-list clearfix">
                                             <li><a href="impressum.html">Impressum</a></li>
                                             <li><a href="datenschutz.html">Datenschutz</a></li>
+                                            <li><a href="#" data-consent-open>Cookie-Einstellungen</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -486,21 +503,17 @@
         <!-- main-footer end -->
 
 
-        <!--WhatsApp-->
-        <a href="https://wa.me/4915780810894" target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="WhatsApp">
-            <i class="fab fa-whatsapp"></i>
-        </a>
-
-        <!--Aktions-Sidebar-->
-        <div class="action-sidebar">
-            <a href="tel:+4915780810894" class="action-sidebar-btn" aria-label="Jetzt anrufen: 0157 80810894">
-                <span class="label">Jetzt anrufen</span>
-                <span class="icon"><i class="fas fa-phone"></i></span>
-            </a>
-            <a href="angebot-anfordern.html" class="action-sidebar-btn" aria-label="Angebot anfordern">
-                <span class="label">Angebot anfordern</span>
-                <span class="icon"><i class="fas fa-envelope"></i></span>
-            </a>
+        <!--Kontakt-Widget: Foto in Ruhe, bei Hover/Klick fahren Telefon, Angebot und WhatsApp aus. -->
+        <div class="contact-widget">
+            <ul class="contact-widget-actions" id="contact-widget-actions">
+                <li><a href="tel:+4915780810894" class="cw-btn cw-phone" aria-label="Jetzt anrufen: 0157 80810894"><i class="fas fa-phone"></i></a></li>
+                <li><a href="angebot-anfordern.html" class="cw-btn cw-mail" aria-label="Angebot anfordern"><i class="fas fa-envelope"></i></a></li>
+                <li><a href="https://wa.me/4915780810894" target="_blank" rel="noopener noreferrer" class="cw-btn cw-whatsapp" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a></li>
+            </ul>
+            <button type="button" class="contact-widget-toggle" aria-expanded="false" aria-controls="contact-widget-actions" aria-label="Kontaktmöglichkeiten öffnen">
+                <img src="assets/images/kontakt-avatar.webp" width="64" height="64" alt="">
+                <span class="contact-widget-status" aria-hidden="true"></span>
+            </button>
         </div>
 
         <!--Scroll to top-->
@@ -528,6 +541,7 @@
 
     <!-- main-js -->
     <script src="assets/js/script.js"></script>
+    <script src="assets/js/consent.js" defer></script>
 
 
 </body><!-- End of .page_wrapper -->

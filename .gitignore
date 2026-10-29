@@ -29,3 +29,7 @@ npm-debug.log*
 
 # SMTP credentials — never commit
 smtp-config.php
+
+ADS.md
+STRATEGY.md
+ads/

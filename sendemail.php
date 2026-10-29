@@ -12,10 +12,21 @@ use PHPMailer\PHPMailer\Exception;
 define('RECIPIENT_NAME',  'MS Clean');
 define('RECIPIENT_EMAIL', 'kontakt@msclean-mannheim.de');
 
-// Bedient zwei Formulare: das Kontaktformular (kontakt.html) und das
-// Frageformular am Ende der FAQ-Seite (faq.html). Das versteckte Feld
+// Bedient drei Formulare: das Kontaktformular (kontakt.html), das
+// Frageformular am Ende der FAQ-Seite (faq.html) und den Anfrage-Block
+// "Kostenloses Angebot" vor dem Footer (7 Seiten). Das versteckte Feld
 // "formsource" steuert nur, wohin im Fehlerfall zurueckgeleitet wird.
-$sources     = ['kontakt' => 'kontakt.html', 'faq' => 'faq.html'];
+$sources     = [
+    'kontakt'       => 'kontakt.html',
+    'faq'           => 'faq.html',
+    'index'         => 'index.html',
+    'umzug'         => 'umzug.html',
+    'entruempelung' => 'entruempelung.html',
+    'einsatzgebiet' => 'einsatzgebiet.html',
+    'faq-angebot'   => 'faq.html',
+    'blog'          => 'blog.html',
+    'blog-details'  => 'blog-details.html',
+];
 $sourceKey   = isset($_POST['formsource']) && isset($sources[$_POST['formsource']]) ? $_POST['formsource'] : 'kontakt';
 $errorTarget = $sources[$sourceKey];
 
@@ -51,12 +62,30 @@ $userPhone   = isset($_POST['phone'])    ? trim(preg_replace("/[^\s\S\.\-\_\@a-z
 $userSubject = isset($_POST['subject'])  ? trim(preg_replace("/(From:|To:|BCC:|CC:|Subject:|Content-Type:)/", "", $_POST['subject'])) : "";
 $message     = isset($_POST['message'])  ? trim(preg_replace("/(From:|To:|BCC:|CC:|Subject:|Content-Type:)/", "", $_POST['message'])) : "";
 
-// Telefon ist nur im Kontaktformular Pflicht - das FAQ-Formular soll moeglichst
-// niedrigschwellig bleiben.
+// Zusatzfelder des Anfrage-Blocks: einzeilig, Leistung nur aus der Whitelist
+// (gleiche Slugs wie ?leistung= auf angebot-anfordern.html).
+$leistungen  = [
+    'privatumzug'   => 'Privatumzug',
+    'firmenumzug'   => 'Firmenumzug',
+    'fernumzug'     => 'Fernumzug',
+    'entruempelung' => 'Entrümpelung',
+    'moebelmontage' => 'Möbelmontage',
+    'kueche'        => 'Küche mitnehmen & aufbauen',
+];
+$leistung    = (isset($_POST['leistung']) && is_string($_POST['leistung']) && isset($leistungen[$_POST['leistung']])) ? $leistungen[$_POST['leistung']] : "";
+$oneLine     = function ($key) {
+    return (isset($_POST[$key]) && is_string($_POST[$key])) ? trim(preg_replace("/[\r\n]+|(From:|To:|BCC:|CC:|Subject:|Content-Type:)/", " ", $_POST[$key])) : "";
+};
+$userStreet  = $oneLine('street');
+$userPlz     = $oneLine('plz');
+$userCity    = $oneLine('ort');
+
+// Telefon ist ueberall Pflicht ausser im FAQ-Frageformular - das soll
+// moeglichst niedrigschwellig bleiben.
 if (!$userName || !$senderEmail || !$message || !filter_var($senderEmail, FILTER_VALIDATE_EMAIL)) {
     reject($errorTarget);
 }
-if ($sourceKey === 'kontakt' && !$userPhone) {
+if ($sourceKey !== 'faq' && !$userPhone) {
     reject($errorTarget);
 }
 
@@ -76,7 +105,9 @@ try {
     $mail->addReplyTo($senderEmail, $userName);
     $mail->addAddress(RECIPIENT_EMAIL, RECIPIENT_NAME);
 
-    if ($sourceKey === 'faq') {
+    if ($leistung) {
+        $mail->Subject = "Neue Angebotsanfrage (" . $leistung . ") von " . $userName . " \xe2\x80\x93 Ms Clean";
+    } elseif ($sourceKey === 'faq') {
         $mail->Subject = "Neue Frage \xc3\xbcber die FAQ-Seite von " . $userName . " \xe2\x80\x93 Ms Clean";
     } else {
         $mail->Subject = "Neue Kontaktanfrage von " . $userName . " \xe2\x80\x93 Ms Clean";
@@ -90,6 +121,13 @@ try {
     if ($userSubject) {
         $body .= "Betreff: " . $userSubject . "\n";
     }
+    if ($leistung) {
+        $body .= "Leistung: " . $leistung . "\n";
+    }
+    if ($userStreet || $userPlz || $userCity) {
+        $body .= "Adresse: " . trim($userStreet . ", " . trim($userPlz . " " . $userCity), ", ") . "\n";
+    }
+    $body .= "Gesendet von: " . $errorTarget . "\n";
     $body .= "\nNachricht:\n" . $message;
 
     $mail->Body = $body;

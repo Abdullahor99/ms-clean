@@ -41,7 +41,8 @@ When creating a new page, copy the full header/footer block from an existing act
 | File | Purpose | Status |
 |------|---------|--------|
 | `index.html` | Startseite | Done |
-| `umzug.html` | Umzug (einzige Leistungsseite) | **Deaktiviert** (Nav-Link auskommentiert, 302 auf `/`) |
+| `umzug.html` | Umzug (einzige Leistungsseite, Ziel-URL der Google-Ads-Anzeigen) | Done (seit 2026-10-25 wieder aktiv) |
+| `entruempelung.html` | Entrümpelung (Landingpage, auch für eine spätere Ads-Kampagne) | Done (2026-10-26) |
 | `einsatzgebiet.html` | Einsatzgebiet | Done |
 | `kontakt.html` | Kontakt | Done |
 | `angebot-anfordern.html` | Angebot anfordern | Done |
@@ -63,7 +64,8 @@ stammen aus der Zeit davor und sind inhaltlich überholt.
 ### Pages Still to Create
 
 **Service sub-pages:**
-- `umzug/privatumzug.html`, `bueroumzug.html`, `moebelmontage.html`, `wohnungsaufloesung.html`
+- `umzug/privatumzug.html`, `bueroumzug.html`, `moebelmontage.html`
+- ~~`wohnungsaufloesung.html`~~ → erledigt als `entruempelung.html` im Hauptordner
 
 **Local SEO pages:**
 - `einsatzgebiet/umzug-mannheim.html`, `-karlsruhe.html`, `-stuttgart.html`, `-heidelberg.html`, `-ludwigshafen.html`, `-heilbronn.html`
@@ -96,15 +98,16 @@ font-awesome-all.css → flaticon.css → owl.css → bootstrap.css → jquery.f
 
 ### Formulare
 
-Es gibt drei Formulare und zwei Mail-Skripte:
+Es gibt vier Formulare und zwei Mail-Skripte:
 
 | Formular | action | Pflichtfelder |
 |---|---|---|
 | `kontakt.html` | `sendemail.php` (`formsource=kontakt`) | Name, E-Mail, Telefon, Nachricht |
 | `faq.html` (Fragebox) | `sendemail.php` (`formsource=faq`) | Name, E-Mail, Betreff, Frage — **kein** Telefon |
 | `angebot-anfordern.html` | `sendemail-appointment.php` | Name, E-Mail, Telefon + per JS erzeugtes `message` |
+| Anfrage-Block vor dem Footer (7 Seiten) | `sendemail.php` (`formsource=<seite>`, auf `faq.html` `faq-angebot`) | Leistung, Beschreibung, Name, Straße, PLZ, Ort, Telefon, E-Mail |
 
-Alle drei enden bei Erfolg auf `danke.html` (dort feuert die Google-Ads-Conversion).
+Alle vier enden bei Erfolg auf `danke.html` (dort feuert die Google-Ads-Conversion).
 Im Fehlerfall geht es zurück zur Ausgangsseite mit `?message=Failed` bzw. `?status=Fehler`.
 
 **Jedes Formular braucht drei Dinge**, sonst weist das PHP die Absendung ab:
@@ -137,6 +140,205 @@ Unused template variants kept as copy-paste reference. Asset paths inside these 
 Update this file after every major change.
 
 ## Changelog
+
+### 2026-10-28 — Cookie-Banner mit Google Consent Mode v2
+
+Empfehlung von Google (Lina), Variante vom Inhaber gewählt: **„Advanced“**. Der Google-Tag
+lädt immer, steht aber bis zur Wahl auf `denied` und sendet nur cookielose Signale.
+Cookies gibt es erst nach „Alle akzeptieren“. Kein Fremdanbieter, keine Kosten.
+
+- **Head aller 13 Seiten:** Im gtag-Block steht vor `gtag('js'…)` der Default
+  `gtag('consent','default', …denied, wait_for_update:500)`, dazu `ads_data_redaction` und
+  `url_passthrough`. Dort wird auch eine gespeicherte Zustimmung (`localStorage.msc_consent`,
+  `{v:1, ads, ts}`, 12 Monate gültig) sofort als `update granted` wiederhergestellt.
+  **Der Default muss vor `config` stehen**, deshalb inline und nicht in einer Datei.
+- **`assets/js/consent.js`** (Vanilla, `defer`, nach `script.js`): baut das Banner, zwei gleich
+  große Buttons „Alle akzeptieren“ / „Nur notwendige“, sendet `consent update`.
+  `[data-consent-open]` öffnet es wieder.
+- **Footer-Link „Cookie-Einstellungen“** in „Rechtliches“ auf allen 13 Seiten, dazu einer in `datenschutz.html` §7.
+- **`datenschutz.html`:** §7 „Cookies und Einwilligung“, §8 „Google Ads Conversion-Tracking und
+  Consent Mode“ (Anker `#google-ads`), §9 verweist auf §8, Stand Oktober 2026. Die alten
+  Sätze „keine Marketing-Cookies, kein Cookie-Banner nötig“ waren seit dem Google-Tag falsch.
+  TTDSG heißt jetzt TDDDG.
+- CSS: Abschnitt „COOKIE-BANNER“ am Ende von `style.css`, Umbruch ≤991/≤767px in
+  `responsive.css`. `z-index: 99990` (über dem Kontakt-Widget, unter `.mobile-menu`).
+- **Neue Seite = drei Dinge mitkopieren:** Consent-Block im Head, `consent.js`, Footer-Link.
+- Geprüft per Headless-Chrome: Default steht vor `config`, Akzeptieren speichert und sendet
+  `update granted`, nach dem Reload kein Banner und das Update kommt aus dem Head,
+  Footer-Link öffnet erneut, Ablehnen ohne Update, kein horizontaler Scroll bei 390px,
+  `div`-Balance aller 13 Seiten unverändert.
+
+### 2026-10-26 — Entrümpelung: Abschnitt „Verwerten statt wegwerfen"
+
+Vom Inhaber entschieden: **Verwertbares wird transparent auf den Preis angerechnet,
+gut Erhaltenes geht an gemeinnützige Projekte und soziale Einrichtungen.** Neuer
+Abschnitt `.verwertung-section` auf `entruempelung.html` direkt nach der
+`.about-section`. Er spiegelt das Layout der about-section (Text links, Bild rechts per
+`order-lg-*`) und steht auf Weiß, damit sich die beiden Abschnitte trennen. Bild:
+`sofa-verpackt-zum-umzugswagen-tragen.webp` mit Symbolbild-Hinweis. Die FAQ „Was kostet
+eine Entrümpelung?" hat einen Satz zur Anrechnung bekommen (sichtbar **und** JSON-LD).
+
+**Die Logoleiste der Vorlage (Diakonie, AWO, Caritas, DRK, ASB) ist bewusst nicht
+gebaut**, und die Verbände werden auch nicht namentlich genannt (Entscheidung des
+Inhabers). Es gibt keine Vereinbarung mit ihnen, Logos würden eine Partnerschaft
+behaupten (§ 5 UWG, Markenrecht), und das Rote-Kreuz-Zeichen darf ohnehin nur das DRK
+führen (§ 125 OWiG). `fakten.md` ist entsprechend nachgezogen.
+
+### 2026-10-26 — Anfrage-Block „Kostenloses Angebot" vor dem Footer
+
+Nachbau einer Vorlage des Inhabers: links ein Formular mit dunklem Kopf, rechts eine
+Kontaktkarte (rundes Foto, Telefon, E-Mail, WhatsApp), darunter eine Einsatzgebietskarte
+und vier Häkchen. Steht als `<section class="anfrage-section" id="kostenloses-angebot">`
+direkt vor `<!-- main-footer -->` auf **7 Seiten**: `index` (dort vor dem Laufband
+`.slide-text-outer`), `umzug`, `entruempelung`, `einsatzgebiet`, `faq`, `blog`,
+`blog-details`. **Bewusst nicht** auf `angebot-anfordern`/`kontakt` (eigenes Formular)
+und `danke`/`error`/`impressum`/`datenschutz`. Der Block ist auf allen Seiten gleich,
+nur `formsource` und die Vorauswahl der Leistung unterscheiden sich
+(`entruempelung` → Entrümpelung, `umzug` → Privatumzug). **Änderungen am Block = alle 7 Seiten.**
+
+- **Formular** → `sendemail.php`. Neue Felder `leistung` (Whitelist, gleiche Slugs wie
+  `?leistung=`), `street`, `plz`, `ort` (einzeilig bereinigt). Telefon ist jetzt Pflicht
+  für alle Quellen außer `faq`. Betreff „Neue Angebotsanfrage (Leistung) von …", die Mail
+  nennt Adresse und Ausgangsseite. Das `<select>` trägt `class="ignore"`, sonst macht
+  `niceSelect()` daraus ein Fake-Dropdown. Mit DDEV/Mailpit getestet: Versand → `danke.html`,
+  ohne Telefon → `?message=Failed`.
+- **Falle Platzhalterfarbe:** `style.css:157` setzt `::-webkit-input-placeholder` global auf
+  `inherit !important`, deshalb braucht `.anfrage-field ::placeholder` selbst `!important`.
+- **Neue Assets:** `assets/images/kontakt-foto.webp` (300×300, gleicher Ausschnitt wie der
+  Widget-Avatar) und `assets/images/einsatzgebiet-karte.svg`. Die Karte ist selbst
+  gezeichnet: 200-km-Kreis, Städte per Länge/Breite projiziert, **keine
+  Google-Maps-Einbettung**, weil die ohne Consent-Banner schon beim Laden IP-Adressen an Google schickt.
+- **Bewusst nicht aus der Vorlage übernommen:** „rund um die Uhr erreichbar",
+  „kurzfristige Termine", „100 % Festpreisgarantie". Nichts davon ist belegt bzw. ist im Skill gesperrt.
+- CSS: Abschnitt „ANFRAGE-BLOCK" am Ende von `style.css`, Umbruch ≤991/≤767px in `responsive.css`.
+
+### 2026-10-26 — Intro-Link auf `umzug.html` repariert, „Vermieter" gestrichen
+
+Der Link „Entrümpelung und Wohnungsauflösung" im Intro von `.service-style-two` stand
+quer über dem Text: Die Template-Regel `.service-style-two .sec-title a` ist für einen
+„Alle ansehen"-Link gedacht (`position: absolute`, Versalien) und erwischt jeden Link in
+der `.sec-title`. Neue Gegenregel `.service-style-two .sec-title p a` macht Links im
+Fließtext wieder zu normalen Textlinks (`--theme-color-text`, Unterstrich).
+
+Vom Inhaber: Die besenreine Übergabe geht **nicht immer an den Vermieter**, auch an
+Eigentümer oder Käufer. Sechs Stellen umformuliert (`index.html` 2×, `umzug.html` 2×,
+`entruempelung.html` 2×, jeweils inkl. JSON-LD) zu „besenreine Übergabe der Räume" bzw.
+„an Vermieter, Eigentümer oder Käufer".
+
+### 2026-10-26 — Kontakt-Widget ersetzt WhatsApp-Button und Aktions-Sidebar
+
+Nachbau eines Widgets, das der Inhaber auf einer anderen Website gesehen hat. In Ruhe
+steht rechts unten nur ein rundes Foto mit grünem Online-Punkt. Bei Hover (nur echte
+Maus, `@media (hover: hover)`) oder Klick/Tap (`.is-open`, `script.js` am Dateiende)
+fahren darüber drei Kreise aus: **Telefon** (Gold) · **Angebot** (dunkel, Briefumschlag →
+`angebot-anfordern.html`, nicht `mailto:`) · **WhatsApp** (Grün). Klick außerhalb und
+`Escape` schließen.
+
+- `.whatsapp-float` und `.action-sidebar` sind aus allen 13 Seiten, `style.css` und
+  `responsive.css` gelöscht. Neu: Abschnitt „KONTAKT-WIDGET" am Ende von `style.css`,
+  ≤767px etwas kleiner (`responsive.css`).
+- **`.scroll-to-top` sitzt jetzt links unten** (`left: 30px`), wo vorher WhatsApp war.
+- **WhatsApp-Conversion unverändert:** der Listener in `script.js` greift auf jeden
+  `wa.me`-Link, also auch auf den im Widget.
+- **Foto:** `assets/images/kontakt-avatar.webp` (160×160, ~5 KB), Ausschnitt aus dem echten
+  Mitarbeiterfoto `assets/ai-images/mohmad-prori.webp` (`cwebp -crop 290 180 1000 1000
+  -resize 160 160`). Das Unsplash-Platzhalterbild ist ersetzt. Foto tauschen = nur diese
+  Datei ersetzen, am HTML ändert sich nichts.
+
+### 2026-10-26 — Neue Seite `entruempelung.html`
+
+Landingpage für Entrümpelung, **im Hauptordner** (nicht `umzug/`), damit die URL kurz
+ist und als Ziel-URL einer eigenen Google-Ads-Kampagne taugt. Gerüst (Head, Header,
+Footer, Skripte) aus `umzug.html`, Text aus einem KI-Entwurf (`entrümplung.md`),
+gegen `fakten.md` korrigiert.
+
+**Abschnitte:** `.page-title` · sechs `.service-card` (Bausteine von `index.html`) ·
+`.about-section` mit Symbolbild-Hinweis · `.working-section` (4 Schritte) ·
+`.chooseus-section` · `.review-bar` · `.faq-section` (Akkordeon von `index.html`) ·
+`.consulting-section`. Alle CTAs → `angebot-anfordern.html?leistung=entruempelung#anfrage`.
+JSON-LD: LocalBusiness (`makesOffer` = die sechs Leistungen), `BreadcrumbList`,
+`FAQPage` — **die sechs FAQ-Antworten stehen doppelt**, bei Änderungen beide Stellen.
+
+**Vom Inhaber bestätigt (2026-10-26):** Entrümpelung, Haushalts-, Wohnungs- und
+Firmenauflösung, Auflösung nach Todesfall, Messie-Wohnungen · kostenlose Besichtigung ·
+Anwesenheit nicht nötig (Schlüsselübergabe) · besenreine Übergabe · fachgerechte
+Entsorgung. **Nicht angeboten bzw. nicht zugesagt:** Abbrucharbeiten, Reinigung von
+Messie-Wohnungen. ~~Wertanrechnung, Spenden~~ → seit 2026-10-26 zugesagt, siehe oben. Aus dem KI-Entwurf gestrichen: „15 Jahre"
+(gesperrte Fremdzahl), „Familienbetrieb", „100 % Festpreisgarantie", „persönlicher
+Ansprechpartner", Haftpflicht-FAQ.
+
+**Eingebunden:** Menüpunkt „Entrümpelung" nach „Umzug" in Nav und Footer aller 13
+Seiten · Kachelüberschrift auf `index.html` verlinkt (neue Regel `.service-card h3 a`) ·
+Intro auf `umzug.html` verlinkt · `sitemap.xml` (9 URLs). Neue CSS-Regel
+`.about-section .image-box p.image-note`.
+
+**Geprüft:** `div`-Balance aller 13 Seiten · JSON-LD valide, FAQ sichtbar = JSON-LD ·
+keine toten lokalen Pfade · keine verbotenen Begriffe · Screenshots 1440/500px.
+Das Hauptmenü mit sechs Punkten passt bei 1400px in eine Zeile; ≤1200px greift
+ohnehin das Burger-Menü.
+
+
+### 2026-10-25 — Halteverbotszone gestrichen
+
+Vom Inhaber klargestellt: **Ms Clean bietet keine Halteverbotszone an.** Alle Zusagen
+entfernt — je drei Paket-Listenpunkte und zwei JSON-LD-`description` (Basic, Komfort) auf
+`index.html` und `umzug.html`, dazu zwei Fließtextsätze auf `index.html` (Ablauf-Schritt
+„Umzugstag", Kachel „Saubere Planung"). Skill nachgezogen: `fakten.md` führt sie als
+„nicht angeboten", `stimme.md` hat die Merkmal-Zeile verloren, `seitentypen.md` verlangt
+bei Stadtseiten nur noch die Parksituation. Kein Treffer mehr in den aktiven Seiten.
+
+### 2026-10-25 — `umzug.html` wieder aktiviert
+
+Rückbau des Eintrags vom 2026-08-19. Grund: Beide Google-Ads-Anzeigen haben
+`https://msclean-mannheim.de/umzug.html` als Ziel-URL und landeten über den 302 auf der
+Startseite.
+
+- 24 `<li>`-Zeilen (Nav + Footer) auf allen 12 Seiten wieder einkommentiert, auf
+  `umzug.html` mit `class="current"`
+- `Redirect 302 /umzug.html /` samt Kommentarblock aus `.htaccess` entfernt
+- `sitemap.xml`: `<url>`-Block für `umzug.html` zurück (Priorität 0.9), 8 URLs
+- **Bewusst nicht zurückgebaut:** die 8 Galerie-Links auf `index.html` zeigen weiter
+  direkt ins Angebotsformular. Das ist ein Klick weniger bis zur Anfrage.
+
+**Inhalt nachgezogen:** Fernumzug und Entrümpelung fehlten auf der Seite ganz (Intro,
+Häkchenliste, JSON-LD `makesOffer`). JSON-LD-Eintrag „Wohnungsauflösung" an
+`index.html` angeglichen („Entrümpelung und Wohnungsauflösung"). Die vier
+Leistungskacheln hatten `href="#"` und führen jetzt mit `?leistung=<slug>` ins Formular.
+„itemisiert" → „aufgeschlüsselt".
+
+**Icons der Leistungskacheln ersetzt:** Die PNGs `icon-43` bis `icon-46` stammen aus dem
+Küchen-Template (Herd, Grundriss, Winkelmaß, Backofen). Ersetzt durch dieselben
+Font-Awesome-Glyphen wie die `.service-card` auf `index.html` (`fa-truck-moving`,
+`fa-building-user`, `fa-kitchen-set`, `fa-screwdriver-wrench`). Neuer Modifier
+`.service-block-two .icon-box-fa` in `style.css` mit derselben Kachel (64px, `#fdf8ed`,
+Hover in Theme-Farbe).
+Ebenso die vier Ablauf-Schritte (`fa-phone-volume`, `fa-file-invoice`,
+`fa-calendar-check`, `fa-truck-ramp-box`, nutzt die bestehende Regel
+`.working-block-one … .icon i`) und die drei Vorteile (`fa-file-invoice`,
+`fa-people-carry-box`, `fa-shield-halved`, neue Regel `.chooseus-block-one .icon-box i`).
+Bewusst `fa-file-invoice` statt `-dollar`: ein $-Zeichen passt nicht zu Festpreisen in Euro.
+
+**Bilder auf den neuen Bestand `assets/ai-images/` umgestellt** (bisher `real-images/`):
+Seitenkopf (Preload **und** `bg-layer`) `ein-umzug-wagen.webp` →
+`umzugsteam-traegt-verpacktes-moebelstueck.webp` · About `hamody5.webp` →
+`zwei-umzugshelfer-vor-umzugswagen.webp` · CTA-Block `hamody4.webp` →
+`umzugsteam-traegt-geraet-ueber-laderampe.webp`. Bewusst Bilder gewählt, die auf
+`index.html` **nicht** vorkommen, damit sich die beiden Seiten nicht doppeln.
+`width`/`height` auf 1600×1067 nachgezogen, Alt-Texte neu.
+
+**Seitenkopf-Maske auf allen Unterseiten** (`.page-title .bg-layer:before`, gilt für alle
+11 Seiten mit `.page-title`): statt `#000` mit `opacity: 0.2` ein Verlauf von 70 % (links,
+unter der Überschrift) auf 35 % (rechts). ≤767px gleichmäßig 60 %, weil der Text dort
+die volle Breite einnimmt. `.review-bar`: Padding 80px Desktop, 40px ≤991px.
+
+**Offen:** Das Premium-Paket nennt „Endreinigung alte Wohnung" (hier und auf
+`index.html`), obwohl Reinigung als eigene Leistung gestrichen ist. Vom Inhaber klären
+lassen.
+
+**Nach dem Deploy:** `curl -sSI https://msclean-mannheim.de/umzug.html` muss **200**
+liefern, nicht 302. Ein Browser, der die Seite seit August besucht hat, kann den 302
+noch kurz im Cache haben.
+
 
 ### 2026-09-02 — Lighthouse-Audit umgesetzt: CLS, Font-Display, Render-Blocking-CSS, Bildgrößen, Kontrast
 
@@ -538,6 +740,9 @@ greift) · About-Spalte ausgewogen · Hero-Motiv sitzt im rechten Ausschnitt · 
 
 
 ### 2026-08-19 — Aktions-Sidebar, Header scrollt auf Mobil mit
+
+> **Teil 1 (Aktions-Sidebar) ersetzt am 2026-10-26** durch das Kontakt-Widget, siehe dort.
+> Teil 2 und 3 (Sticky-Header, Begrüßungssatz) gelten weiter.
 
 Zwei Conversion-Themen in einem Durchgang. Beide betreffen **alle 12 aktiven Seiten**.
 

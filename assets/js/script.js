@@ -554,3 +554,33 @@ document.addEventListener('click', function (e) {
 	e.preventDefault();
 	gtag_report_conversion(link.href);
 });
+
+
+/* ==========================================================================
+   Kontakt-Widget: Klick/Tap auf das Foto oeffnet Telefon, Angebot und
+   WhatsApp. Hover auf dem Desktop erledigt das CSS allein.
+   ========================================================================== */
+
+(function ($) {
+	var $widget = $('.contact-widget');
+	if (!$widget.length) { return; }
+	var $toggle = $widget.find('.contact-widget-toggle');
+
+	function setOpen(open) {
+		$widget.toggleClass('is-open', open);
+		$toggle.attr('aria-expanded', open ? 'true' : 'false');
+		$toggle.attr('aria-label', open ? 'Kontaktmöglichkeiten schließen' : 'Kontaktmöglichkeiten öffnen');
+	}
+
+	$toggle.on('click', function () {
+		setOpen(!$widget.hasClass('is-open'));
+	});
+
+	$(document).on('click', function (e) {
+		if (!$(e.target).closest('.contact-widget').length) { setOpen(false); }
+	});
+
+	$(document).on('keydown', function (e) {
+		if (e.key === 'Escape') { setOpen(false); }
+	});
+})(window.jQuery);

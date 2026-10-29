@@ -7,6 +7,20 @@
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  // Consent Mode v2: bis zur Wahl im Banner alles abgelehnt (assets/js/consent.js)
+  gtag('consent', 'default', {
+    ad_storage: 'denied', ad_user_data: 'denied',
+    ad_personalization: 'denied', analytics_storage: 'denied',
+    wait_for_update: 500
+  });
+  gtag('set', 'ads_data_redaction', true);
+  gtag('set', 'url_passthrough', true);
+  try {
+    var c = JSON.parse(localStorage.getItem('msc_consent') || 'null');
+    if (c && c.v === 1 && c.ads === 'granted' && Date.now() - c.ts < 31536e6) {
+      gtag('consent', 'update', {ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted', analytics_storage: 'granted'});
+    }
+  } catch (e) {}
   gtag('js', new Date());
 
   gtag('config', 'AW-18256090192');
@@ -370,7 +384,8 @@
                                 <div class="collapse navbar-collapse show clearfix" id="navbarSupportedContent">
                                     <ul class="navigation clearfix">
                                         <li><a href="index.html">Startseite</a></li>
-                                        <!-- <li><a href="umzug.html">Umzug</a></li> -->
+                                        <li><a href="umzug.html">Umzug</a></li>
+                                        <li><a href="entruempelung.html">Entrümpelung</a></li>
                                         <li><a href="einsatzgebiet.html">Einsatzgebiet</a></li>
                                         <!-- <li><a href="blog.html">Blog</a></li> -->
                                         <li><a href="faq.html">FAQ</a></li>
@@ -449,7 +464,7 @@
 
                         <div class="intro-box">
                             <p>Der Schutz Ihrer persönlichen Daten ist uns ein wichtiges Anliegen. Diese Datenschutzerklärung informiert Sie darüber, welche personenbezogenen Daten wir auf unserer Website erheben, wie wir sie verarbeiten und welche Rechte Ihnen als betroffene Person zustehen. Sie gilt für die Website <strong>msclean-mannheim.de</strong> und alle damit verbundenen Unterseiten.</p>
-                            <p class="last-updated" style="margin-bottom:0;">Stand: Juni 2026</p>
+                            <p class="last-updated" style="margin-bottom:0;">Stand: Oktober 2026</p>
                         </div>
 
 
@@ -551,25 +566,37 @@
 
 
                         <!-- ===== 7. Cookies ===== -->
-                        <h2><span class="section-number">7</span> Cookies</h2>
+                        <h2><span class="section-number">7</span> Cookies und Einwilligung</h2>
 
-                        <p>Unsere Website verwendet <strong>keine Tracking-Cookies, keine Analyse-Cookies und keine Marketing-Cookies</strong>. Es werden ausschließlich technisch notwendige Cookies eingesetzt, die für den ordnungsgemäßen Betrieb der Website erforderlich sind (z.&nbsp;B. Session-Cookies für die korrekte Funktion von Formularen). Diese Cookies werden nach Ende Ihrer Browser-Sitzung automatisch gelöscht.</p>
+                        <p>Beim ersten Besuch fragen wir über ein Banner, ob Sie Cookies von Google Ads zulassen. Ihre Auswahl („Alle akzeptieren“ oder „Nur notwendige“) speichern wir für 12 Monate im lokalen Speicher Ihres Browsers (Eintrag <code>msc_consent</code>). Diese Speicherung ist technisch notwendig, damit das Banner nicht bei jedem Seitenaufruf erneut erscheint.</p>
 
-                        <p>Da wir keine Cookies verwenden, die einer Einwilligung bedürfen, ist kein Cookie-Banner erforderlich. Sollten wir künftig Cookies zu Analyse- oder Marketingzwecken einsetzen, werden wir diese Datenschutzerklärung aktualisieren und eine entsprechende Einwilligung einholen.</p>
+                        <p>Marketing-Cookies von Google Ads werden <strong>nur nach Ihrer Einwilligung</strong> gesetzt (Abschnitt 8). Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen oder ändern, über den Link <a href="#" data-consent-open>„Cookie-Einstellungen“</a> im Fußbereich jeder Seite.</p>
 
-                        <p class="rechtsgrundlage">Rechtsgrundlage für technisch notwendige Cookies: § 25 Abs. 2 Nr. 2 TTDSG i.&nbsp;V.&nbsp;m. Art. 6 Abs. 1 lit. f DSGVO.</p>
+                        <p class="rechtsgrundlage">Rechtsgrundlage für die Speicherung Ihrer Auswahl: § 25 Abs. 2 Nr. 2 TDDDG. Rechtsgrundlage für Marketing-Cookies: § 25 Abs. 1 TDDDG i.&nbsp;V.&nbsp;m. Art. 6 Abs. 1 lit. a DSGVO (Einwilligung).</p>
 
 
-                        <!-- ===== 8. Webanalyse ===== -->
-                        <h2><span class="section-number">8</span> Webanalyse</h2>
+                        <!-- ===== 8. Google Ads ===== -->
+                        <h2 id="google-ads"><span class="section-number">8</span> Google Ads Conversion-Tracking und Consent Mode</h2>
 
-                        <p>Wir verwenden auf dieser Website <strong>kein Webanalyse-Tool</strong>. Es werden keine Daten zu Statistik- oder Marketingzwecken an Dritte übermittelt. Sollten künftig statistische Auswertungen des Nutzungsverhaltens vorgenommen werden, wird diese Datenschutzerklärung entsprechend aktualisiert und – sofern erforderlich – Ihre Einwilligung eingeholt.</p>
+                        <p>Wir schalten Anzeigen bei Google Ads und messen, ob ein Klick auf eine Anzeige zu einer Anfrage führt. Anbieter ist die Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland („Google“). Dafür ist auf dieser Website der Google-Tag eingebunden.</p>
+
+                        <p>Als Anfrage zählen der Aufruf unserer Danke-Seite nach dem Absenden eines Formulars und der Klick auf einen WhatsApp-Link. Verarbeitet werden dabei insbesondere die Klick-ID der Anzeige, die aufgerufene Seite, Zeitpunkt, Browser- und Geräteinformationen sowie Ihre IP-Adresse.</p>
+
+                        <p><strong>Mit Ihrer Einwilligung</strong> setzt Google Cookies, um die Anfrage dem Anzeigenklick zuzuordnen. Diese Cookies werden höchstens 90 Tage gespeichert.</p>
+
+                        <p><strong>Ohne Ihre Einwilligung</strong> setzt Google keine Cookies. Wir nutzen den sogenannten Consent Mode von Google: Der Google-Tag übermittelt dann nur cookielose Signale (z.&nbsp;B. Zeitpunkt, aufgerufene Seite, Einwilligungsstatus, Browserinformationen). Google verwendet diese, um die Zahl der Anfragen über Anzeigen statistisch zu schätzen. Anzeigenbezogene Informationen werden dabei geschwärzt.</p>
+
+                        <p>Google kann Daten in die USA übermitteln. Google LLC ist unter dem EU-US Data Privacy Framework zertifiziert, für die USA besteht damit ein Angemessenheitsbeschluss der EU-Kommission (Art. 45 DSGVO). Weitere Informationen: <a href="https://policies.google.com/privacy?hl=de" target="_blank" rel="noopener">Datenschutzerklärung von Google</a> und <a href="https://business.safety.google/privacy/" target="_blank" rel="noopener">Google-Informationen für Werbekunden</a>.</p>
+
+                        <p class="rechtsgrundlage">Rechtsgrundlage für Cookies und die Messung mit Einwilligung: § 25 Abs. 1 TDDDG i.&nbsp;V.&nbsp;m. Art. 6 Abs. 1 lit. a DSGVO. Rechtsgrundlage für die cookielosen Signale ohne Einwilligung: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Messung des Erfolgs unserer Werbung).</p>
+
+                        <p>Ein Webanalyse-Tool wie Google Analytics setzen wir nicht ein.</p>
 
 
                         <!-- ===== 9. Weitergabe an Dritte ===== -->
                         <h2><span class="section-number">9</span> Weitergabe personenbezogener Daten an Dritte</h2>
 
-                        <p>Wir geben Ihre personenbezogenen Daten grundsätzlich <strong>nicht an Dritte weiter</strong>, es sei denn:</p>
+                        <p>Wir geben Ihre personenbezogenen Daten grundsätzlich <strong>nicht an Dritte weiter</strong> (zu Google Ads siehe Abschnitt 8), es sei denn:</p>
 
                         <ul>
                             <li>Sie haben Ihre ausdrückliche Einwilligung dazu erteilt (Art. 6 Abs. 1 lit. a DSGVO),</li>
@@ -642,7 +669,7 @@
                         <!-- ===== 13. Aktualität und Änderungen ===== -->
                         <h2><span class="section-number">13</span> Aktualität und Änderungen dieser Datenschutzerklärung</h2>
 
-                        <p>Diese Datenschutzerklärung ist aktuell gültig und hat den Stand <strong>Juni 2026</strong>.</p>
+                        <p>Diese Datenschutzerklärung ist aktuell gültig und hat den Stand <strong>Oktober 2026</strong>.</p>
 
                         <p>Durch die Weiterentwicklung unserer Website und Angebote oder aufgrund geänderter gesetzlicher bzw. behördlicher Vorgaben kann es notwendig werden, diese Datenschutzerklärung zu ändern. Die jeweils aktuelle Datenschutzerklärung kann jederzeit auf unserer Website abgerufen und ausgedruckt werden.</p>
 
@@ -703,7 +730,8 @@
                                             <span>Leistungen</span>
                                         </div>
                                         <ul class="links-list clearfix">
-                                            <!-- <li><a href="umzug.html">Umzug</a></li> -->
+                                            <li><a href="umzug.html">Umzug</a></li>
+                                            <li><a href="entruempelung.html">Entrümpelung</a></li>
                                             <li><a href="angebot-anfordern.html">Angebot anfordern</a></li>
                                         </ul>
                                     </div>
@@ -716,6 +744,7 @@
                                         <ul class="links-list clearfix">
                                             <li><a href="impressum.html">Impressum</a></li>
                                             <li><a href="datenschutz.html">Datenschutz</a></li>
+                                            <li><a href="#" data-consent-open>Cookie-Einstellungen</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -758,21 +787,17 @@
         <!-- main-footer end -->
 
 
-        <!--WhatsApp-->
-        <a href="https://wa.me/4915780810894" target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="WhatsApp">
-            <i class="fab fa-whatsapp"></i>
-        </a>
-
-        <!--Aktions-Sidebar-->
-        <div class="action-sidebar">
-            <a href="tel:+4915780810894" class="action-sidebar-btn" aria-label="Jetzt anrufen: 0157 80810894">
-                <span class="label">Jetzt anrufen</span>
-                <span class="icon"><i class="fas fa-phone"></i></span>
-            </a>
-            <a href="angebot-anfordern.html" class="action-sidebar-btn" aria-label="Angebot anfordern">
-                <span class="label">Angebot anfordern</span>
-                <span class="icon"><i class="fas fa-envelope"></i></span>
-            </a>
+        <!--Kontakt-Widget: Foto in Ruhe, bei Hover/Klick fahren Telefon, Angebot und WhatsApp aus. -->
+        <div class="contact-widget">
+            <ul class="contact-widget-actions" id="contact-widget-actions">
+                <li><a href="tel:+4915780810894" class="cw-btn cw-phone" aria-label="Jetzt anrufen: 0157 80810894"><i class="fas fa-phone"></i></a></li>
+                <li><a href="angebot-anfordern.html" class="cw-btn cw-mail" aria-label="Angebot anfordern"><i class="fas fa-envelope"></i></a></li>
+                <li><a href="https://wa.me/4915780810894" target="_blank" rel="noopener noreferrer" class="cw-btn cw-whatsapp" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a></li>
+            </ul>
+            <button type="button" class="contact-widget-toggle" aria-expanded="false" aria-controls="contact-widget-actions" aria-label="Kontaktmöglichkeiten öffnen">
+                <img src="assets/images/kontakt-avatar.webp" width="64" height="64" alt="">
+                <span class="contact-widget-status" aria-hidden="true"></span>
+            </button>
         </div>
 
         <!-- Scroll to top -->
@@ -794,6 +819,7 @@
     <script src="assets/js/appear.js"></script>
     <script src="assets/js/jquery.nice-select.min.js"></script>
     <script src="assets/js/script.js"></script>
+    <script src="assets/js/consent.js" defer></script>
 
 </body>
 </html>

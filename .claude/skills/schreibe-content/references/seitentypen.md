@@ -55,10 +55,8 @@ Dublette. Der Skill **recherchiert sie aktiv**, bevor er schreibt:
    die Weststadt nennt, beweist Ortskenntnis; wer „alle Stadtteile" schreibt, nicht.
 4. **Typische Bebauung** — Altbau ohne Aufzug, enge Treppenhäuser, Fußgängerzone,
    Neubaugebiet. Das ist der Punkt, an dem es für den Kunden praktisch wird.
-5. **Parksituation und Halteverbotszone** — **wo genau wird sie beantragt?** Die Behörde
-   heißt in jeder Stadt anders (Ordnungsamt, Straßenverkehrsbehörde, Bürgeramt), hat
-   andere Vorlauffristen und Gebühren. Das weiß kein Wettbewerber-Fließtext, und es ist
-   der stärkste einzelne Beweis für Ortskenntnis.
+5. **Parksituation** — enge Straßen, Anwohnerparken, Fußgängerzonen. **Keine
+   Halteverbotszone zusagen:** Ms Clean bietet sie nicht an (siehe `fakten.md`).
 6. **Besonderheiten** — Uni- und Studentenanteil (Heidelberg), Industrie und Pendler
    (Ludwigshafen), Innenstadt-Zufahrtsbeschränkungen.
 
@@ -71,7 +69,7 @@ Was sich nicht belegen lässt, wird `[BELEG NÖTIG: …]` — nicht erfunden.
 | `.page-title` | H1 mit Stadt, Breadcrumb `Startseite / Einsatzgebiet / <Stadt>` |
 | Intro | **Beantwortet die Hauptfrage in den ersten ~200 Wörtern**, statt sie aufzubauen. Fahrzeit, Radius, Festpreis, 24-Stunden-Antwort |
 | Leistungen | 3–4 Blöcke, auf die Stadt bezogen |
-| **Lokale Besonderheiten** | Der Kern. Stadtteile, Bebauung, Halteverbotszone, Parken |
+| **Lokale Besonderheiten** | Der Kern. Stadtteile, Bebauung, Parken |
 | Ablauf | 4 Schritte (`.working-block-one`) |
 | Pakete | Verweis auf `angebot-anfordern.html?paket=<slug>#anfrage` |
 | FAQ | 3–5 Fragen **mit Stadtbezug** — plus `FAQPage`-JSON-LD |

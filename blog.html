@@ -7,6 +7,20 @@
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  // Consent Mode v2: bis zur Wahl im Banner alles abgelehnt (assets/js/consent.js)
+  gtag('consent', 'default', {
+    ad_storage: 'denied', ad_user_data: 'denied',
+    ad_personalization: 'denied', analytics_storage: 'denied',
+    wait_for_update: 500
+  });
+  gtag('set', 'ads_data_redaction', true);
+  gtag('set', 'url_passthrough', true);
+  try {
+    var c = JSON.parse(localStorage.getItem('msc_consent') || 'null');
+    if (c && c.v === 1 && c.ads === 'granted' && Date.now() - c.ts < 31536e6) {
+      gtag('consent', 'update', {ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted', analytics_storage: 'granted'});
+    }
+  } catch (e) {}
   gtag('js', new Date());
 
   gtag('config', 'AW-18256090192');
@@ -267,7 +281,8 @@
                                 <div class="collapse navbar-collapse show clearfix" id="navbarSupportedContent">
                                     <ul class="navigation clearfix">
                                         <li><a href="index.html">Startseite</a></li>
-                                        <!-- <li><a href="umzug.html">Umzug</a></li> -->
+                                        <li><a href="umzug.html">Umzug</a></li>
+                                        <li><a href="entruempelung.html">Entrümpelung</a></li>
                                         <li><a href="einsatzgebiet.html">Einsatzgebiet</a></li>
                                         <!-- <li><a href="blog.html">Blog</a></li> -->
                                         <li><a href="faq.html">FAQ</a></li>
@@ -437,6 +452,113 @@
         <!-- blog-grid end -->
 
 
+        <!-- anfrage-section: Formular + Kontaktkarte vor dem Footer -->
+        <section class="anfrage-section pt_120 pb_120" id="kostenloses-angebot">
+            <div class="auto-container">
+                <div class="row clearfix">
+                    <div class="col-lg-8 col-md-12 col-sm-12 anfrage-form-column">
+                        <div class="anfrage-form-box">
+                            <div class="anfrage-form-head"><h2>Kostenloses Angebot</h2></div>
+                            <form method="post" action="sendemail.php" class="anfrage-form">
+                                <input type="hidden" name="subject" value="Angebotsanfrage – Ms Clean Website">
+                                <input type="hidden" name="formsource" value="blog">
+                                <input type="hidden" name="form_ts" class="form-ts" value="">
+                                <!-- Honeypot: per CSS unsichtbar, nur Bots fuellen es aus -->
+                                <div class="hp-field" aria-hidden="true">
+                                    <label for="af-website">Website (bitte freilassen)</label>
+                                    <input type="text" name="website" id="af-website" tabindex="-1" autocomplete="off">
+                                </div>
+                                <div class="anfrage-field">
+                                    <label for="af-leistung">Welche Leistung brauchen Sie? *</label>
+                                    <select name="leistung" id="af-leistung" class="ignore" required>
+                                        <option value="" selected disabled>Bitte wählen</option>
+                                        <option value="privatumzug">Privatumzug</option>
+                                        <option value="firmenumzug">Firmenumzug</option>
+                                        <option value="fernumzug">Fernumzug</option>
+                                        <option value="entruempelung">Entrümpelung</option>
+                                        <option value="moebelmontage">Möbelmontage</option>
+                                        <option value="kueche">Küche mitnehmen &amp; aufbauen</option>
+                                    </select>
+                                </div>
+                                <div class="anfrage-field">
+                                    <label for="af-message">Beschreiben Sie Ihre Anfrage *</label>
+                                    <textarea name="message" id="af-message" placeholder="Beispiel: 3-Zimmer-Wohnung, 2. OG ohne Aufzug, von Mannheim nach Heidelberg" required></textarea>
+                                </div>
+                                <div class="anfrage-grid">
+                                    <div class="anfrage-field">
+                                        <label for="af-name">Vor- und Nachname *</label>
+                                        <input type="text" name="username" id="af-name" autocomplete="name" required>
+                                    </div>
+                                    <div class="anfrage-field">
+                                        <label for="af-street">Straße und Nr. *</label>
+                                        <input type="text" name="street" id="af-street" autocomplete="street-address" required>
+                                    </div>
+                                    <div class="anfrage-field">
+                                        <label for="af-plz">PLZ *</label>
+                                        <input type="text" name="plz" id="af-plz" inputmode="numeric" autocomplete="postal-code" maxlength="5" required>
+                                    </div>
+                                    <div class="anfrage-field">
+                                        <label for="af-ort">Ort *</label>
+                                        <input type="text" name="ort" id="af-ort" autocomplete="address-level2" required>
+                                    </div>
+                                    <div class="anfrage-field">
+                                        <label for="af-phone">Telefon *</label>
+                                        <input type="tel" name="phone" id="af-phone" autocomplete="tel" required>
+                                    </div>
+                                    <div class="anfrage-field">
+                                        <label for="af-email">E-Mail *</label>
+                                        <input type="email" name="email" id="af-email" autocomplete="email" required>
+                                    </div>
+                                </div>
+                                <div class="privacy-group">
+                                    <input type="checkbox" name="privacy" id="af-privacy" value="1" required>
+                                    <label for="af-privacy">Ich habe die <a href="datenschutz.html">Datenschutzerklärung</a> gelesen und bin damit einverstanden, dass meine Angaben zur Bearbeitung meiner Anfrage verwendet werden.*</label>
+                                </div>
+                                <button type="submit" class="theme-btn anfrage-submit" name="submit-form">Angebot anfordern</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 col-sm-12 anfrage-info-column">
+                        <div class="anfrage-contact-card">
+                            <figure class="anfrage-photo"><img src="assets/images/kontakt-foto.webp" width="300" height="300" alt="Ihr Ansprechpartner bei Ms Clean" loading="lazy"></figure>
+                            <ul class="anfrage-contact-list">
+                                <li>
+                                    <i class="fas fa-phone" aria-hidden="true"></i>
+                                    <div>
+                                        <a href="tel:+4915780810894">0157 80810894</a>
+                                        <p>Montag bis Sonntag von 8 bis 20 Uhr. Rufen Sie an, wir beraten Sie persönlich.</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                                    <div>
+                                        <a href="mailto:kontakt@msclean-mannheim.de">kontakt@<wbr>msclean-mannheim.de</a>
+                                        <p>Schreiben Sie uns, wir antworten in der Regel innerhalb von 24 Stunden.</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                                    <div>
+                                        <a href="https://wa.me/4915780810894" target="_blank" rel="noopener noreferrer">0157 80810894</a>
+                                        <p>Schicken Sie uns Fotos von Möbeln oder Räumen, damit wird das Angebot genauer.</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <a href="einsatzgebiet.html" class="anfrage-map" aria-label="Einsatzgebiet ansehen: 200 km um Mannheim"><img src="assets/images/einsatzgebiet-karte.svg" width="400" height="260" alt="Karte: Einsatzgebiet 200 km um Mannheim mit Frankfurt, Karlsruhe, Stuttgart und Würzburg" loading="lazy"></a>
+                        <ul class="anfrage-checks">
+                            <li><i class="fas fa-circle-check" aria-hidden="true"></i>Kostenlos &amp; unverbindlich anfragen</li>
+                            <li><i class="fas fa-circle-check" aria-hidden="true"></i>Festpreis vor Auftragsbeginn</li>
+                            <li><i class="fas fa-circle-check" aria-hidden="true"></i>Vollversicherung bei jedem Auftrag</li>
+                            <li><i class="fas fa-circle-check" aria-hidden="true"></i>Antwort innerhalb von 24 Stunden</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- anfrage-section end -->
+
+
         <!-- main-footer -->
         <footer class="main-footer">
             <div class="auto-container">
@@ -479,7 +601,8 @@
                                             <span>Leistungen</span>
                                         </div>
                                         <ul class="links-list clearfix">
-                                            <!-- <li><a href="umzug.html">Umzug</a></li> -->
+                                            <li><a href="umzug.html">Umzug</a></li>
+                                            <li><a href="entruempelung.html">Entrümpelung</a></li>
                                             <li><a href="angebot-anfordern.html">Angebot anfordern</a></li>
                                         </ul>
                                     </div>
@@ -492,6 +615,7 @@
                                         <ul class="links-list clearfix">
                                             <li><a href="impressum.html">Impressum</a></li>
                                             <li><a href="datenschutz.html">Datenschutz</a></li>
+                                            <li><a href="#" data-consent-open>Cookie-Einstellungen</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -534,21 +658,17 @@
         <!-- main-footer end -->
 
 
-        <!--WhatsApp-->
-        <a href="https://wa.me/4915780810894" target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="WhatsApp">
-            <i class="fab fa-whatsapp"></i>
-        </a>
-
-        <!--Aktions-Sidebar-->
-        <div class="action-sidebar">
-            <a href="tel:+4915780810894" class="action-sidebar-btn" aria-label="Jetzt anrufen: 0157 80810894">
-                <span class="label">Jetzt anrufen</span>
-                <span class="icon"><i class="fas fa-phone"></i></span>
-            </a>
-            <a href="angebot-anfordern.html" class="action-sidebar-btn" aria-label="Angebot anfordern">
-                <span class="label">Angebot anfordern</span>
-                <span class="icon"><i class="fas fa-envelope"></i></span>
-            </a>
+        <!--Kontakt-Widget: Foto in Ruhe, bei Hover/Klick fahren Telefon, Angebot und WhatsApp aus. -->
+        <div class="contact-widget">
+            <ul class="contact-widget-actions" id="contact-widget-actions">
+                <li><a href="tel:+4915780810894" class="cw-btn cw-phone" aria-label="Jetzt anrufen: 0157 80810894"><i class="fas fa-phone"></i></a></li>
+                <li><a href="angebot-anfordern.html" class="cw-btn cw-mail" aria-label="Angebot anfordern"><i class="fas fa-envelope"></i></a></li>
+                <li><a href="https://wa.me/4915780810894" target="_blank" rel="noopener noreferrer" class="cw-btn cw-whatsapp" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a></li>
+            </ul>
+            <button type="button" class="contact-widget-toggle" aria-expanded="false" aria-controls="contact-widget-actions" aria-label="Kontaktmöglichkeiten öffnen">
+                <img src="assets/images/kontakt-avatar.webp" width="64" height="64" alt="">
+                <span class="contact-widget-status" aria-hidden="true"></span>
+            </button>
         </div>
 
         <!--Scroll to top-->
@@ -576,6 +696,7 @@
 
     <!-- main-js -->
     <script src="assets/js/script.js"></script>
+    <script src="assets/js/consent.js" defer></script>
 
 </body><!-- End of .page_wrapper -->
 </html>

@@ -91,9 +91,25 @@ Ausschließlich Umzug. Küchenmontage und Reinigung werden **nicht mehr angebote
 benannt) · **Fernumzug** · Möbelmontage (Ab- und Aufbau) · **Entrümpelung** /
 Wohnungsauflösung / Haushaltsauflösung
 
-**Zusatzleistungen:** Verpackungsservice / Einpackservice · Halteverbotszone beantragen ·
+**Zusatzleistungen:** Verpackungsservice / Einpackservice ·
 Möbeltransport · Endreinigung der alten Wohnung · Behörden-Ummeldung (Senioren-Paket) ·
 Küche mitnehmen & aufbauen
+
+**Entrümpelung im Detail** (Inhaber, 2026-10-26, Seite `entruempelung.html`):
+Entrümpelung · Haushalts- und Wohnungsauflösung · Firmenauflösung · Auflösung nach
+Todesfall · Messie-Wohnungen. Kostenlose Besichtigung vor Ort, danach Festpreis ·
+Anwesenheit nicht nötig, Schlüsselübergabe reicht · besenreine Übergabe · fachgerechte
+Entsorgung · Brauchbares wird aussortiert.
+**Verwertung und Spenden (Inhaber, 2026-10-26):** Was sich verwerten lässt, wird
+**transparent auf den Preis angerechnet**. Gut Erhaltenes wird an **gemeinnützige Projekte
+und soziale Einrichtungen** weitergegeben. **Keine Verbandsnamen oder -logos** (Diakonie,
+AWO, Caritas, DRK, ASB …): Es gibt keine Vereinbarung mit ihnen, eine Nennung als Partner
+wäre irreführend (§ 5 UWG), und das Rote-Kreuz-Zeichen ist zusätzlich gesetzlich geschützt
+(§ 125 OWiG). Keine Wertangaben in Euro, keine Zusage „wir kaufen an".
+**Nicht zusagen:** Abbrucharbeiten, Reinigung (auch nicht bei Messie-Wohnungen).
+
+**Nicht angeboten: Halteverbotszone.** Ms Clean beantragt keine Halteverbotszone (Inhaber, 2026-10-25).
+Nirgends zusagen, weder als Paketleistung noch im Fließtext noch im JSON-LD.
 
 **Der Radius ist 200 km um Mannheim** (vom Inhaber bestätigt am 2026-08-19, vorher
 130 km). Zwei Erweiterungen gehören dazu:

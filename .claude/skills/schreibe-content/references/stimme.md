@@ -127,7 +127,6 @@ Jedes Merkmal um „**damit Sie …**" ergänzen und prüfen, ob der Satz danach
 |---|---|
 | Vollversicherung | Geht etwas zu Bruch, zahlen nicht Sie. |
 | Festpreis | Sie wissen vorher, was am Ende auf der Rechnung steht. |
-| Halteverbotszone | Der Wagen steht vor der Tür statt zwei Straßen weiter — das spart Stunden. |
 | Möbelmontage inklusive | Sie schlafen in der ersten Nacht im aufgebauten Bett. |
 | Verpackungsmaterial inklusive | Sie müssen nichts besorgen und nichts entsorgen. |
 
